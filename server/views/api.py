@@ -10,13 +10,13 @@ ptf = Blueprint('ptf', __name__)
 def home():
     return render_template("base.html")
 
-@ptf.route("/signup", methods=["GET", "POST"]))
+@ptf.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "GET":
-        return render_template("signup.html")
+        return jsonify()
 
 @ptf.route("/signin", methods=["GET", "POST"])
 def signin():
     if request.method == "GET":
-        return render_template("signin.html")
+        return jsonify()
 
