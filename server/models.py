@@ -1,7 +1,7 @@
 from db_connect import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
-class users(db.Model):
+class Users(db.Model):
     
     __tablename__ = 'users'
 
@@ -21,7 +21,7 @@ class users(db.Model):
         return check_password_hash(self.password, password)
 
 
-class profiles(db.Model):
+class Profiles(db.Model):
 
     __tablename__ = 'profiles'
 
@@ -31,10 +31,10 @@ class profiles(db.Model):
     introduction    = db.Column(db.String(255))
     edu_name        = db.Column(db.String(255))
     major           = db.Column(db.String(100))
-    edu_status      = db.Column(db.String(10))
+    edu_status      = db.Column(db.String(2))
 
 
-class awards(db.Model):
+class Awards(db.Model):
 
     __tablename__ = 'awards'
 
@@ -44,9 +44,9 @@ class awards(db.Model):
     details     = db.Column(db.Text())
 
 
-class portfolios(db.Model):
+class Projects(db.Model):
 
-    __tablename__ = 'portfolios'
+    __tablename__ = 'projects'
 
     id              = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     user_id         = db.Column(db.String(20), db.ForeignKey('users.id'), nullable=False)
@@ -56,7 +56,7 @@ class portfolios(db.Model):
     end_date        = db.Column(db.Date, nullable=False)
 
 
-class certificates(db.Model):
+class Certificates(db.Model):
 
     __tablename__ = 'certificates'
 
