@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS `CERTIFICATES`(
     `USER_ID`     VARCHAR(20) NOT NULL,     -- 회원 ID (USERS.ID 외래키)
     `NAME`        VARCHAR(255),             -- 자격증 이름
     `ISSUED_BY`   VARCHAR(255),             -- 발급처
+    `acquisition_date` DATE,                -- 취득일자
     PRIMARY KEY(`ID`),
     FOREIGN KEY(`USER_ID`) REFERENCES USERS(`ID`) ON DELETE CASCADE
 );

@@ -5,10 +5,10 @@ from db_connect import db
 
 # 프로필
 class Profile(Resource):
-        def get(self, user_id):
-            # user_profile = Profiles.query.filter(Profiles.user_id == session['user_id']).first()
-            # id는 어차피 session에서 갖고다니기때문에 user_id는 테스트용 parameter
-            user_profile = Profiles.query.filter(Profiles.user_id == user_id).first()
+        def get(self):
+            session['user_id'] = 'test2' # 테스트용 test
+            user_profile = Profiles.query.filter(Profiles.user_id == session['user_id']).first()
+
             user_profile_json = {
                 'image': user_profile.image,
                 'introduction': user_profile.introduction,
@@ -29,6 +29,7 @@ class Profile(Resource):
                 parser.add_argument('edu_status', type=str, required=True)
                 args = parser.parse_args()
 
+                session['user_id'] = 'test2' # 테스트용 test
                 user_id = session['user_id']
                 image = args['image']
                 introduction = args['introduction']
@@ -53,5 +54,34 @@ class Profile(Resource):
             except Exception as e:
                 return jsonify({'error': str(e)})
 
-        def put(self):
-            pass
+        def patch(self):
+            try:
+                session['user_id'] = 'test2' # 테스트용 test
+                user_profile = Profiles.query.filter(Profiles.user_id == session['user_id']).first()
+
+                parser = reqparse.RequestParser()
+                parser.add_argument('image', type=str, required=True)
+                parser.add_argument('introduction', type=str, required=True)
+                parser.add_argument('edu_name', type=str, required=True)
+                parser.add_argument('major', type=str, required=True)
+                parser.add_argument('edu_status', type=str, required=True)
+                args = parser.parse_args()
+
+                image = args['image']
+                introduction = args['introduction']
+                edu_name = args['edu_name']
+                major = args['major']
+                edu_status = args['edu_status']
+
+                user_profile.image = image
+                user_profile.introduction = introduction
+                user_profile.edu_name = edu_name
+                user_profile.major = major
+                user_profile.edu_status = edu_status
+                
+                db.session.commit()
+
+                return jsonify({"result": "success"})
+
+            except Exception as e:
+                return jsonify({'error': str(e)})
