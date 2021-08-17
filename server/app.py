@@ -1,8 +1,8 @@
 from flask import Flask
 from db_connect import db
 from flask_restful import Api
-from views import Award, Certificate, Profile, Project, SignIn, SignUp
-from views import HelloWorld
+from apis import Award, Certificate, Education, Profile, Project, SignIn, SignUp
+from apis import HelloWorld
 import config
 
 def create_app():
@@ -20,8 +20,9 @@ def create_app():
     api.add_resource(SignUp.SignUp, '/signup')
     api.add_resource(Profile.Profile, '/profile')
     api.add_resource(Award.Award, '/award', '/award/<int:id>')
-    api.add_resource(Certificate.Certificate, '/certificate', '/certificate<int:id>')
+    api.add_resource(Certificate.Certificate, '/certificate', '/certificate/<int:id>')
     api.add_resource(Project.Project, '/project', '/project/<int:id>')
+    api.add_resource(Education.Education, '/education', '/education/<int:id>')
 
     return app
 

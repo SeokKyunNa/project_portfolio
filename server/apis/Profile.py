@@ -11,10 +11,7 @@ class Profile(Resource):
 
             user_profile_json = {
                 'image': user_profile.image,
-                'introduction': user_profile.introduction,
-                'edu_name': user_profile.edu_name,
-                'major': user_profile.major,
-                'edu_status': user_profile.edu_status
+                'introduction': user_profile.introduction
             }
 
             return jsonify(user_profile_json)
@@ -24,26 +21,17 @@ class Profile(Resource):
                 parser = reqparse.RequestParser()
                 parser.add_argument('image', type=str, required=True)
                 parser.add_argument('introduction', type=str, required=True)
-                parser.add_argument('edu_name', type=str, required=True)
-                parser.add_argument('major', type=str, required=True)
-                parser.add_argument('edu_status', type=str, required=True)
                 args = parser.parse_args()
 
                 session['user_id'] = 'test2' # 테스트용 test
                 user_id = session['user_id']
                 image = args['image']
                 introduction = args['introduction']
-                edu_name = args['edu_name']
-                major = args['major']
-                edu_status = args['edu_status']
                 
                 profile = Profiles(
                     user_id = user_id,
                     image = image,
-                    introduction = introduction,
-                    edu_name = edu_name,
-                    major = major,
-                    edu_status = edu_status
+                    introduction = introduction
                 )
 
                 db.session.add(profile)
@@ -62,22 +50,13 @@ class Profile(Resource):
                 parser = reqparse.RequestParser()
                 parser.add_argument('image', type=str, required=True)
                 parser.add_argument('introduction', type=str, required=True)
-                parser.add_argument('edu_name', type=str, required=True)
-                parser.add_argument('major', type=str, required=True)
-                parser.add_argument('edu_status', type=str, required=True)
                 args = parser.parse_args()
 
                 image = args['image']
                 introduction = args['introduction']
-                edu_name = args['edu_name']
-                major = args['major']
-                edu_status = args['edu_status']
 
                 user_profile.image = image
                 user_profile.introduction = introduction
-                user_profile.edu_name = edu_name
-                user_profile.major = major
-                user_profile.edu_status = edu_status
                 
                 db.session.commit()
 

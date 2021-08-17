@@ -14,11 +14,34 @@ CREATE TABLE IF NOT EXISTS `PROFILES`(
     `USER_ID`         VARCHAR(20) NOT NULL,     -- 회원 ID (USERS.ID 외래키)
     `IMAGE`           VARCHAR(255),             -- 프로필 사진
     `INTRODUCTION`   VARCHAR(255),             -- 한 줄 소개
-    `EDU_NAME`        VARCHAR(255),             -- 학교 이름
-    `MAJOR`           VARCHAR(100),             -- 전공
-    `EDU_STATUS`      VARCHAR(2),              -- 재학 상태
     PRIMARY KEY(`ID`),
     FOREIGN KEY(USER_ID) REFERENCES USERS(`ID`) ON DELETE CASCADE
+);
+
+-- 학력 상태 --
+-- (1: 재학중, 2: 고졸, 3: 학사졸업, 4: 석사졸업, 5: 박사졸업) --
+CREATE TABLE IF NOT EXISTS `EDU_STATUS` (
+    `CODE`      INT AUTO_INCREMENT,         -- 학력 상태 코드
+    `STATUS`    VARCHAR(20) NOT NULL,     -- 학력 상태
+    PRIMARY KEY(`CODE`)
+);
+-- 학력 상태 SEEDING --
+INSERT INTO `EDU_STATUS` (`STATUS`) VALUE ("재학중");
+INSERT INTO `EDU_STATUS` (`STATUS`) VALUE ("고등학교졸업");
+INSERT INTO `EDU_STATUS` (`STATUS`) VALUE ("학사졸업");
+INSERT INTO `EDU_STATUS` (`STATUS`) VALUE ("석사졸업");
+INSERT INTO `EDU_STATUS` (`STATUS`) VALUE ("박사졸업");
+
+-- 학력 사항 --
+CREATE TABLE IF NOT EXISTS `EDUCATIONS` (
+    `ID`            INT AUTO_INCREMENT,         -- 학력 사항 ID
+    `USER_ID`       VARCHAR(20) NOT NULL,       -- 회원 ID (USERS.ID 외래키)
+    `NAME`          VARCHAR(100) NOT NULL,       -- 학교 이름
+    `MAJOR`         VARCHAR(100) NOT NULL,      -- 전공
+    `EDU_STATUS`    INT NOT NULL DEFAULT 1,       
+    PRIMARY KEY(`ID`),
+    FOREIGN KEY(`USER_ID`) REFERENCES USERS(`ID`) ON DELETE CASCADE,
+    FOREIGN KEY(`EDU_STATUS`) REFERENCES EDU_STATUS(`CODE`) ON DELETE SET DEFAULT
 );
 
 -- 수상 내역 --
