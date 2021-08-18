@@ -1,29 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { Formik } from "formik";
 import styled from 'styled-components';
 import * as Sign from './SignComponents'
 
 
 export default function SignUpForm ({ onSubmit }) {
     const initialValues = { id: "", password: "", check_password: "", name: "" };
-    const [formValues, setFormValues] = useState(initialValues);
-    const [formErrors, setFormErrors] = useState({});
-    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const submitForm = (e) => {
-        e.preventDefault();
-        console.log(formValues);
-    };
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormValues({ ...formValues, [name]: value });
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setFormErrors(validate(formValues));
-        setIsSubmitting(true);
+    const submitForm = (values) => {
+        console.log(values);
     };
 
     const validate = (values) => {
@@ -66,95 +52,115 @@ export default function SignUpForm ({ onSubmit }) {
         return errors;
     };
 
-    // 폼 태그에 값이 0이거나(?), isSubmitting이 false 상태일 때,
-    // submitForm을 누름ㄴ [formErrors]가 마운트 되도록 설정
-    useEffect(() => {
-        if (Object.keys(formErrors).length === 0 && isSubmitting) {
-            submitForm();
-        }
-    }, [formErrors]);
-
     return (
-        <Sign.Container>
-            <form onSubmit={handleSubmit} noValidate>
-                <fieldset>
+        <Formik
+            initialValues={initialValues}
+            validate={validate}
+            onSubmit={submitForm}
+        >
+            {(formik) => {
+                const {
+                    values,         // 사용자 입력 값
+                    handleChange,   // onChange 이벤트 처리
+                    handleSubmit,   // onSubmit 이벤트 처리
+                    errors,         // 각 필드의 유효성 검사 오류
+                    touched,        // 필드가 터치 되었는지
+                    handleBlur,     // onBlur 이벤트 처리
+                    isValid,        // 유효하다면 True, 아니면 False
+                    dirty           // 폼 양식을 건드렸다면 True, 아니면 False
+                } = formik;
+                return (
+                    <Sign.Container>
+                        <form onSubmit={handleSubmit} noValidate>
+                            <fieldset>
+                                <div>
+                                    <Sign.Label htmlFor="id">아이디</Sign.Label>
+                                    <Sign.Input 
+                                        type="email"
+                                        id="id"
+                                        name="id"
+                                        autocomplete="off"
+                                        placeholder="이메일 형식으로 입력하세요."
+                                        required
+                                        value={values.id}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        className={errors.id && touched.id ? "input-error" : null}
+                                    />
+                                    {/* 아이디 에러나 아이디 터치했을 때 */}
+                                    {errors.id &&  touched.id && (
+                                        <span className="error">{errors.id}</span>
+                                    )}
+                                </div>
+                                <div>
+                                    <Sign.Label htmlFor="password">비밀번호</Sign.Label>
+                                    <Sign.Input 
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        placeholder="비밀번호"
+                                        required
+                                        value={values.password}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        className={errors.password && touched.password ? "input-error" : null}
+                                    />
+                                    {/* 비밀번호 에러나 비밀번호 터치했을 때 */}
+                                    {errors.password && touched.password && (
+                                        <span className="error">{errors.password}</span>
+                                    )}
+                                </div>
+                                <div>
+                                    <Sign.Label htmlFor="check_password">비밀번호 확인</Sign.Label>
+                                    <Sign.Input 
+                                        type="password"
+                                        id="check_password"
+                                        name="check_password"
+                                        placeholder="비밀번호 확인"
+                                        required
+                                        value={values.check_password}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        className={errors.check_password && touched.check_password ? "input-error" : null}
+                                    />
+                                {/* 비밀번호 확인 에러나 비밀번호 확인 터치했을 때 */}
+                                {errors.check_password && touched.check_password && (
+                                    <span className="error">{errors.check_password}</span>
+                                )}
+                            </div>
+                            <div>
+                                <Sign.Label htmlFor="name">이름</Sign.Label>
+                                <Sign.Input 
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    autocomplete="off"
+                                    placeholder="이름"
+                                    required
+                                    value={values.name}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    className={errors.name && touched.name ? "input-error" : null}
+                                />
+                                {/* 이름 에러나 이름 터치했을 때 */}
+                                {errors.name && touched.name && (
+                                    <span className="error">{errors.name}</span>
+                                )}
+                            </div>
+                        </fieldset>
+                            <Sign.Button 
+                                type="submit"
+                                className={dirty && isValid ? "" : "disabled-btn"}
+                                disabled={!(dirty && isValid)}
+                            >회원가입</Sign.Button>
+                    </form>
                     <div>
-                        <Sign.Label htmlFor="id">아이디</Sign.Label>
-                        <Sign.Input 
-                            type="email"
-                            id="id"
-                            name="id"
-                            autocomplete="off"
-                            placeholder="이메일 형식으로 입력하세요."
-                            required
-                            value={formValues.id}
-                            onChange={handleChange}
-                            className={formErrors.id && "input-error"}
-                        />
-                        {/* 에러 발생 시 */}
-                        {formErrors.id && (
-                            <span className="error">{formErrors.id}</span>
-                        )}
+                        <Link to="/signin">로그인하기</Link>
                     </div>
-                    <div>
-                        <Sign.Label htmlFor="password">비밀번호</Sign.Label>
-                        <Sign.Input 
-                            type="password"
-                            id="password"
-                            name="password"
-                            placeholder="비밀번호"
-                            required
-                            value={formValues.password}
-                            onChange={handleChange}
-                            className={formErrors.password && "input-error"}
-                        />
-                        {/* 에러 발생 시 */}
-                        {formErrors.password && (
-                            <span className="error">{formErrors.password}</span>
-                        )}
-                    </div>
-                    <div>
-                        <Sign.Label htmlFor="check_password">비밀번호 확인</Sign.Label>
-                        <Sign.Input 
-                            type="password"
-                            id="check_password"
-                            name="check_password"
-                            placeholder="비밀번호 확인"
-                            required
-                            value={formValues.check_password}
-                            onChange={handleChange}
-                            className={formErrors.check_password && "input-error"}
-                        />
-                        {/* 에러 발생 시 */}
-                        {formErrors.check_password && (
-                            <span className="error">{formErrors.check_password}</span>
-                        )}
-                    </div>
-                    <div>
-                        <Sign.Label htmlFor="name">이름</Sign.Label>
-                        <Sign.Input 
-                            type="text"
-                            id="name"
-                            name="name"
-                            autocomplete="off"
-                            placeholder="이름"
-                            required
-                            value={formValues.name}
-                            onChange={handleChange}
-                            className={formErrors.name && "input-error"}
-                        />
-                        {/* 에러 발생 시 */}
-                        {formErrors.name && (
-                            <span className="error">{formErrors.name}</span>
-                        )}
-                    </div>
-                </fieldset>
-                    <Sign.Button type="submit">회원가입</Sign.Button>
-            </form>
-            <div>
-                <Link to="/signin">로그인하기</Link>
-            </div>
-        </Sign.Container>
-        
+                </Sign.Container>
+                );
+            }}
+            
+        </Formik>
     )
 }
