@@ -1,6 +1,7 @@
 from flask import Flask
 from db_connect import db
 from flask_restful import Api
+from flask_jwt_extended import JWTManager
 from apis import Award, Certificate, Education, Profile, Project, SignIn, SignUp
 from apis import HelloWorld
 import config
@@ -12,7 +13,7 @@ def create_app():
     db.init_app(app)
     app.secret_key = "dev"
     app.config['SESSION_TYPE'] = 'filesystem'
-
+    jwt = JWTManager(app)
     api = Api(app)
 
     api.add_resource(HelloWorld.HelloWorld, '/')
