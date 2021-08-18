@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import * as Sign from './SignComponents'
 
 
-export default function SignUpForm () {
+export default function SignUpForm ({ onSubmit }) {
     const initialValues = { id: "", password: "", check_password: "", name: "" };
 
     const SignUpSchema = Yup.object().shape({
@@ -28,12 +28,15 @@ export default function SignUpForm () {
         <Formik
             initialValues={initialValues}
             validationSchema={SignUpSchema}
-            onSubmit={(values) => {
+            onSubmit={(values, { setSubmitting }) => {
+                setSubmitting(true);
                 console.log(values);
+                setSubmitting(false);
             }}
         >
             {(formik) => {
                 const {
+                    isSubmitting,
                     errors,         // 각 필드의 유효성 검사 오류
                     touched,        // 필드가 터치 되었는지
                     isValid,        // 유효하다면 True, 아니면 False
@@ -49,7 +52,7 @@ export default function SignUpForm () {
                                         type="email"
                                         id="id"
                                         name="id"
-                                        autocomplete="off"
+                                        autoComplete="off"
                                         placeholder="이메일 형식으로 입력하세요."
                                         className={errors.id && touched.id ? "input-error" : null}
                                     />
@@ -83,7 +86,7 @@ export default function SignUpForm () {
                                         type="text"
                                         id="name"
                                         name="name"
-                                        autocomplete="off"
+                                        autoComplete="off"
                                         placeholder="이름"
                                         className={errors.name && touched.name ? "input-error" : null}
                                     />
@@ -93,7 +96,7 @@ export default function SignUpForm () {
                             <Sign.Button 
                                 type="submit"
                                 className={!(dirty && isValid) ? "disabled-btn" : ""}
-                                disabled={!(dirty && isValid)}
+                                disabled={!(dirty && isValid) || isSubmitting}
                             >회원가입</Sign.Button>
                     </Form>
                     <div>
