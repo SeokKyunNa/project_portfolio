@@ -4,6 +4,7 @@ from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from apis import Award, Certificate, Education, Profile, Project, SignIn, SignUp
 from apis import HelloWorld
+from flask_cors import CORS
 import config
 
 def create_app():
@@ -14,6 +15,8 @@ def create_app():
     app.secret_key = "dev"
     app.config['SESSION_TYPE'] = 'filesystem'
     jwt = JWTManager(app)
+    CORS(app)
+
     api = Api(app)
 
     api.add_resource(HelloWorld.HelloWorld, '/')

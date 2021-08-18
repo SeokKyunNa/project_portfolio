@@ -24,7 +24,7 @@ class SignUp(Resource):
                 name = args['name']
                 
                 if password != check_password:
-                    pass
+                    return jsonify({"result": "passwordFailure"})
                 else:
                     hashed_password = generate_password_hash(password)
 

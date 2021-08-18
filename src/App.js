@@ -1,11 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
+import styled from 'styled-components';
+import UserSign from './UserSign/UserSign.jsx';
+
+const Container = styled.div`
+
+`
 
 function App() {
   return (
-    <div className="App">
-      
-    </div>
+    <Container>
+      <UserSign />
+    </Container>
   );
 }
 
