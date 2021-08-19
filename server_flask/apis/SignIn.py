@@ -1,4 +1,4 @@
-from flask import session, jsonify
+from flask import session, jsonify, abort
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import create_access_token
 from datetime import timedelta
@@ -21,10 +21,15 @@ class SignIn(Resource):
                 password = args['password']
 
                 user_data = Users.query.filter(Users.id == id).first()
+
+                # 가입된 계정인지 확인
+                if not user_data:
+                    return abort(401, 'invalid account')
                 
                 # 비밀번호 일치 확인
                 if not check_password_hash(user_data.password, password):
-                    return jsonify({"result": "failed"})
+                    # return jsonify({"result": "failed"})
+                    return abort(401, 'wrong password')
                 
                 # 세션에 id 저장
                 session.clear()
@@ -45,6 +50,8 @@ class SignIn(Resource):
                 # return jsonify({"result":"success"})
                 
             except Exception as e:
+                session.clear()
+                
                 return jsonify({'error': str(e)})
 
 

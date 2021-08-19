@@ -59,6 +59,8 @@ class Certificate(Resource):
                 return jsonify({"result":"success"})
                 
             except Exception as e:
+                db.session.rollback()
+
                 return jsonify({'error': str(e)})
 
         def patch(self):
@@ -87,6 +89,8 @@ class Certificate(Resource):
                 return jsonify({"result": "success"})
 
             except Exception as e:
+                db.session.rollback()
+
                 return jsonify({'error': str(e)})
 
         def delete(self, id):
@@ -98,4 +102,6 @@ class Certificate(Resource):
 
                 return jsonify({"result": "success"})
             except Exception as e:
+                db.session.rollback()
+                
                 return jsonify({'error': str(e)})

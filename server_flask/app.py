@@ -16,9 +16,6 @@ def create_app():
     
     db.init_app(app)
     migrate = Migrate(app, db)
-
-    app.secret_key = "dev"
-    app.config['SESSION_TYPE'] = 'filesystem'    
     jwt = JWTManager(app)
     CORS(app)
 

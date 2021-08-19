@@ -1,23 +1,23 @@
 import styled, { css } from "styled-components";
-import FilteredPropsInputField from "./FilteredPropsInputField";
+import FilteredPropsInputField, { FilteredPropsForm } from "./FilteredPropsInputField";
 
 export const Container = styled.div`
   background-color: white;
-  width: 410px;
-  height: 500px;
+  width: 500px;
+  height: 90%;
+  margin: auto;
+  flex-direction: column;
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center
 `;
 
 export const TextWrapper = styled.div`
-  
-  + div {
-    margin-top: 10px;
-  }
+  width: 100%;
+  margin: auto;
 
-  > Field {
-    height: 30px;
+  + div {
+    margin-top: 30px;
   }
 `;
 
@@ -30,10 +30,25 @@ export const Label = styled.h5`
 `; */
 
 export const Button = styled.button`
-    background-color: #6558f5;
-    color: #ffffff;
+  width: 150px;
+  height: 35px;
+  margin: 10px auto;
+  display: block;
+  background-color: #6558f5;
+  color: #ffffff;
+  opacity: 0.7;
+  cursor: not-allowed;
+  :not(:disabled) {
+    opacity: 1.0;
+    cursor: default;
+  }
+  
 `;
 
+export const StyledForm = styled(FilteredPropsForm)`
+  width: 400px;
+  margin: auto auto 10px auto;
+`
 
 export const Input = styled(FilteredPropsInputField)`
   background-color: white;

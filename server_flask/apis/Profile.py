@@ -40,6 +40,8 @@ class Profile(Resource):
                 return jsonify({"result":"success"})
                 
             except Exception as e:
+                db.session.rollback()
+
                 return jsonify({'error': str(e)})
 
         def patch(self):
@@ -63,4 +65,6 @@ class Profile(Resource):
                 return jsonify({"result": "success"})
 
             except Exception as e:
+                db.session.rollback()
+                
                 return jsonify({'error': str(e)})

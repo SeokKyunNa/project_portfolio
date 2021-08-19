@@ -22,7 +22,7 @@ export default function SignUpForm ({ onSubmit }) {
 
         name: Yup.string()
             .required("이름을 입력하세요.")
-            .matches(/^[a-zA-Z가-힣]*$/, {message: "영문, 한글로 된 올바른 이름을 입력하세요."}),
+            .matches(/^[a-zA-Z가-힣]*$/, {message: "영문 혹은 한글로 된 올바른 이름을 입력하세요."}),
     });
 
     const handleSubmit = (values) => {
@@ -49,7 +49,7 @@ export default function SignUpForm ({ onSubmit }) {
                 } = formik;
                 return (
                     <Sign.Container>
-                        <Form>
+                        <Sign.StyledForm>
                             <Sign.TextWrapper>
                                 <Sign.Label htmlFor="id">아이디</Sign.Label>
                                 <Sign.Input 
@@ -98,10 +98,10 @@ export default function SignUpForm ({ onSubmit }) {
                             </Sign.TextWrapper>
                             <Sign.Button 
                                 type="submit"
-                                className={!(dirty && isValid) ? "disabled-btn" : ""}
+                                className={!(dirty && isValid) || isSubmitting ? "disabled-btn" : ""}
                                 disabled={!(dirty && isValid) || isSubmitting}
                             >회원가입</Sign.Button>
-                        </Form>
+                        </Sign.StyledForm>
                     <div>
                         <Link to="/signin">로그인하기</Link>
                     </div>

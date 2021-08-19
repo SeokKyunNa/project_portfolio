@@ -7,10 +7,14 @@
   https://codesandbox.io/s/react-formik-styled-components-demo-89dci?file=/src/App.js
 */
 import React from "react";
-import { Field } from "formik";
+import { Field, Form } from "formik";
 
 function FilteredPropsInputField({ className, valid, error, ...props }) {
   return <Field className={className} {...props} />;
+}
+
+export function FilteredPropsForm({ ...props }) {
+  return <Form {...props} />;
 }
 
 export default FilteredPropsInputField;

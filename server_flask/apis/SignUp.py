@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-from flask import jsonify
+from flask import jsonify, abort
 from werkzeug.security import generate_password_hash
 from models import Users
 from db_connect import db
@@ -23,11 +23,20 @@ class SignUp(Resource):
                 check_password = args['check_password']
                 name = args['name']
                 
+                # 비밀번호와 비밀번호 확인란의 비밀번호가 서로 같은지 확인
                 if password != check_password:
-                    return jsonify({"result": "passwordFailure"})
+                    # return jsonify({"result": "check password failure"})
+                    return abort(400, "check password failure")
+                # 비밀번호가 같다면 암호화
                 else:
                     hashed_password = generate_password_hash(password)
 
+                # ID 중복 체크
+                check_duplicate = Users.query.filter(Users.id == id).first()
+                if check_duplicate:
+                    # return jsonify({"result": "duplicated id"})
+                    return abort(409, "duplicate id")
+                
                 user = Users(
                     id = id,
                     password = hashed_password,
@@ -40,6 +49,8 @@ class SignUp(Resource):
                 return jsonify({"result":"success"})
                 
             except Exception as e:
+                db.session.rollback()
+
                 return jsonify({'error': str(e)})
 
 
