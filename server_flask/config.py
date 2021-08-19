@@ -1,4 +1,5 @@
-import os
+# import os
+from datetime import timedelta
 
 # BASE_DIR = os.path.dirname(__file__) # 폴더 구조가 달라져도, 현재 폴더를 가져와서 사용할 수 있도록 설정합니다.
 # SQLALCHEMY_DATABASE_URI = 'sqlite:///{}'.format(os.path.join(BASE_DIR, 'elice_portfolio.db'))
@@ -12,3 +13,11 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 SECRET_KEY = "dev"
 
 SESSION_TYPE = "filesystem"
+
+# JWT 설정
+# If true this will only allow the cookies that contain your JWTs to be sent
+# over https. In production, this should always be set to True
+JWT_COOKIE_SECURE = False
+JWT_TOKEN_LOCATION = "cookies"
+JWT_SECRET_KEY = "dev"
+JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
