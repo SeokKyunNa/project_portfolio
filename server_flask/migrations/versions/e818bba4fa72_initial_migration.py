@@ -1,8 +1,8 @@
-"""Initial migration.
+"""Initial migration
 
-Revision ID: db5877b68209
+Revision ID: e818bba4fa72
 Revises: 
-Create Date: 2021-08-19 15:55:49.018411
+Create Date: 2021-08-19 20:05:09.251028
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'db5877b68209'
+revision = 'e818bba4fa72'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -73,6 +73,19 @@ def upgrade():
     sa.Column('end_date', sa.Date(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
+    )
+    edu_status = sa.sql.table('edu_status', 
+    sa.Column('code', sa.Integer(), nullable=False),
+    sa.Column('status', sa.String(20), nullable=True)
+    )
+    op.bulk_insert(edu_status,
+        [
+            {'code': 1, 'status': '재학중'},
+            {'code': 2, 'status': '고등학교졸업'},
+            {'code': 3, 'status': '학사졸업'},
+            {'code': 4, 'status': '석사졸업'},
+            {'code': 5, 'status': '박사졸업'}
+        ]
     )
     # ### end Alembic commands ###
 
