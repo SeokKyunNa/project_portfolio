@@ -21,8 +21,13 @@ export default function SignUpForm ({ onSubmit }) {
         .oneOf([Yup.ref('password'), null], "비밀번호가 일치하지 않습니다."),
 
         name: Yup.string()
-            .required("이름을 입력하세요."),
+            .required("이름을 입력하세요.")
+            .matches(/^[a-zA-Z가-힣]*$/, {message: "영문, 한글로 된 올바른 이름을 입력하세요."}),
     });
+
+    const handleSubmit = (values) => {
+        onSubmit(values)
+    };
 
     return (
         <Formik
@@ -30,7 +35,7 @@ export default function SignUpForm ({ onSubmit }) {
             validationSchema={SignUpSchema}
             onSubmit={(values, { setSubmitting }) => {
                 setSubmitting(true);
-                console.log(values);
+                handleSubmit(values);
                 setSubmitting(false);
             }}
         >
@@ -45,60 +50,58 @@ export default function SignUpForm ({ onSubmit }) {
                 return (
                     <Sign.Container>
                         <Form>
-                            <fieldset>
-                                <div>
-                                    <Sign.Label htmlFor="id">아이디</Sign.Label>
-                                    <Field 
-                                        type="email"
-                                        id="id"
-                                        name="id"
-                                        autoComplete="off"
-                                        placeholder="이메일 형식으로 입력하세요."
-                                        className={errors.id && touched.id ? "input-error" : null}
-                                    />
-                                    <ErrorMessage name="id" component="span" className="error" />
-                                </div>
-                                <div>
-                                    <Sign.Label htmlFor="password">비밀번호</Sign.Label>
-                                    <Field 
-                                        type="password"
-                                        id="password"
-                                        name="password"
-                                        placeholder="비밀번호"
-                                        className={errors.password && touched.password ? "input-error" : null}
-                                    />
-                                    <ErrorMessage name="password" component="span" className="error" />
-                                </div>
-                                <div>
-                                    <Sign.Label htmlFor="check_password">비밀번호 확인</Sign.Label>
-                                    <Field 
-                                        type="password"
-                                        id="check_password"
-                                        name="check_password"
-                                        placeholder="비밀번호 확인"
-                                        className={errors.check_password && touched.check_password ? "input-error" : null}
-                                    />
-                                <ErrorMessage name="check_password" component="span" className="error" />
-                                </div>
-                                <div>
-                                    <Sign.Label htmlFor="name">이름</Sign.Label>
-                                    <Field 
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        autoComplete="off"
-                                        placeholder="이름"
-                                        className={errors.name && touched.name ? "input-error" : null}
-                                    />
-                                    <ErrorMessage name="name" component="span" className="error" />
-                                </div>
-                            </fieldset>
+                            <Sign.TextWrapper>
+                                <Sign.Label htmlFor="id">아이디</Sign.Label>
+                                <Sign.Input 
+                                    type="email"
+                                    id="id"
+                                    name="id"
+                                    autoComplete="off"
+                                    placeholder="이메일 형식으로 입력하세요."
+                                    className={errors.id && touched.id ? "input-error" : null}
+                                />
+                                <ErrorMessage name="id" component="p" className="error" />
+                            </Sign.TextWrapper>
+                            <Sign.TextWrapper>
+                                <Sign.Label htmlFor="password">비밀번호</Sign.Label>
+                                <Sign.Input 
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    placeholder="비밀번호"
+                                    className={errors.password && touched.password ? "input-error" : null}
+                                />
+                                <ErrorMessage name="password" component="p" className="error" />
+                            </Sign.TextWrapper>
+                            <Sign.TextWrapper>
+                                <Sign.Label htmlFor="check_password">비밀번호 확인</Sign.Label>
+                                <Sign.Input 
+                                    type="password"
+                                    id="check_password"
+                                    name="check_password"
+                                    placeholder="비밀번호 확인"
+                                    className={errors.check_password && touched.check_password ? "input-error" : null}
+                                />
+                            <ErrorMessage name="check_password" component="p" className="error" />
+                            </Sign.TextWrapper>
+                            <Sign.TextWrapper>
+                                <Sign.Label htmlFor="name">이름</Sign.Label>
+                                <Sign.Input 
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    autoComplete="off"
+                                    placeholder="이름"
+                                    className={errors.name && touched.name ? "input-error" : null}
+                                />
+                                <ErrorMessage name="name" component="p" className="error" />
+                            </Sign.TextWrapper>
                             <Sign.Button 
                                 type="submit"
                                 className={!(dirty && isValid) ? "disabled-btn" : ""}
                                 disabled={!(dirty && isValid) || isSubmitting}
                             >회원가입</Sign.Button>
-                    </Form>
+                        </Form>
                     <div>
                         <Link to="/signin">로그인하기</Link>
                     </div>

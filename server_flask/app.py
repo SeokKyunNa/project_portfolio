@@ -5,15 +5,20 @@ from flask_jwt_extended import JWTManager
 from apis import Award, Certificate, Education, Profile, Project, SignIn, SignUp
 from apis import HelloWorld
 from flask_cors import CORS
+from flask_migrate import Migrate
+import models
 import config
+
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(config) # config 에서 가져온 파일을 사용합니다.
     
     db.init_app(app)
+    migrate = Migrate(app, db)
+
     app.secret_key = "dev"
-    app.config['SESSION_TYPE'] = 'filesystem'
+    app.config['SESSION_TYPE'] = 'filesystem'    
     jwt = JWTManager(app)
     CORS(app)
 

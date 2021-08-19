@@ -44,8 +44,9 @@ function SignUpPage() {
     const history = useHistory();
 
     const handleSubmit = async (formData) => {
+        console.log('successsssssssssss');
         const response = await axios.post("http://localhost:5000/signup", formData);
-        console.log(response)
+        console.log(response);
         if (response.data.result === 'success'){
             history.push("/signin");
         }

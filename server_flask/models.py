@@ -28,7 +28,7 @@ class Profiles(db.Model):
     __tablename__ = 'profiles'
 
     id              = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    user_id         = db.Column(db.String(20), db.ForeignKey('users.id'), nullable=False)
+    user_id         = db.Column(db.String(20), db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     image           = db.Column(db.String(255))
     introduction    = db.Column(db.String(255))
 
@@ -41,6 +41,13 @@ class Edu_status(db.Model):
     code        = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     status      = db.Column(db.String(20))
 
+# 학력 상태 SEEDING
+# db.session.add(Edu_status(status='재학중'))
+# db.session.add(Edu_status(status='고등학교졸업'))
+# db.session.add(Edu_status(status='학사졸업'))
+# db.session.add(Edu_status(status='석사졸업'))
+# db.session.add(Edu_status(status='박사졸업'))
+# db.session.commit()
 
 # 사용자 학력 사항
 class Educations(db.Model):
@@ -48,10 +55,10 @@ class Educations(db.Model):
     __tablename__ = 'educations'
 
     id              = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    user_id         = db.Column(db.String(20), db.ForeignKey('users.id'), nullable=False)
+    user_id         = db.Column(db.String(20), db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     name            = db.Column(db.String(100))
     major           = db.Column(db.String(100))
-    edu_status      = db.Column(db.Integer)
+    edu_status      = db.Column(db.Integer, db.ForeignKey('edu_status.code', ondelete='SET DEFAULT'))
 
 
 # 사용자 수상 내역
@@ -60,7 +67,7 @@ class Awards(db.Model):
     __tablename__ = 'awards'
 
     id          = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    user_id     = db.Column(db.String(20), db.ForeignKey('users.id'), nullable=False)
+    user_id     = db.Column(db.String(20), db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     award       = db.Column(db.String(255))
     details     = db.Column(db.Text())
 
@@ -71,7 +78,7 @@ class Projects(db.Model):
     __tablename__ = 'projects'
 
     id              = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    user_id         = db.Column(db.String(20), db.ForeignKey('users.id'), nullable=False)
+    user_id         = db.Column(db.String(20), db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     title           = db.Column(db.String(255), nullable=False)
     content         = db.Column(db.Text(), nullable=False)
     start_date      = db.Column(db.Date, nullable=False)
@@ -84,12 +91,11 @@ class Certificates(db.Model):
     __tablename__ = 'certificates'
 
     id                  = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    user_id             = db.Column(db.String(20), db.ForeignKey('users.id'), nullable=False)
+    user_id             = db.Column(db.String(20), db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     name                = db.Column(db.String(255), nullable=False)
     issued_by           = db.Column(db.String(255), nullable=False)
     acquisition_date    = db.Column(db.Date, nullable=False)
 
-# db.create_all()
 
 '''
 - 회원 정보
