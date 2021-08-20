@@ -2,7 +2,7 @@ from flask import Flask
 from db_connect import db
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
-from apis import Award, Certificate, Education, Profile, Project, SignIn, SignUp, SignOut
+from apis import Award, Certificate, Education, Profile, Project, SignIn, SignUp, SignOut, UserList
 from apis import HelloWorld
 from flask_cors import CORS
 from flask_migrate import Migrate
@@ -30,9 +30,9 @@ def create_app():
     api.add_resource(Certificate.Certificate, '/certificate', '/certificate/<int:id>')
     api.add_resource(Project.Project, '/project', '/project/<int:id>')
     api.add_resource(Education.Education, '/education', '/education/<int:id>')
+    api.add_resource(UserList.UserList, '/userlist', '/userlist')
     
     return app
-
 
 
 if __name__ == "__main__":
