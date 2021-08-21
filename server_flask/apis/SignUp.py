@@ -23,20 +23,15 @@ class SignUp(Resource):
             check_password = args['check_password']
             name = args['name']
             
-            # 비밀번호와 비밀번호 확인란의 비밀번호가 서로 같은지 확인
-            if password != check_password:
-                # return jsonify({"result": "check password failure"})
-                return abort(400, "check password failure")
-            # 비밀번호가 같다면 암호화
-            else:
-                hashed_password = generate_password_hash(password)
-
             # ID 중복 체크
             check_duplicate = Users.query.filter(Users.id == id).first()
             if check_duplicate:
                 # return jsonify({"result": "duplicated id"})
-                return abort(409, "duplicate id")
+                abort(409, "duplicate id")
             
+            # 비밀번호 암호화
+            hashed_password = generate_password_hash(password)
+
             user = Users(
                 id = id,
                 password = hashed_password,
@@ -46,7 +41,7 @@ class SignUp(Resource):
             db.session.add(user)
             db.session.commit()
 
-            return jsonify({"result":"success"})
+            return jsonify({"result":"success"}), 200
             
         except Exception as e:
             db.session.rollback()

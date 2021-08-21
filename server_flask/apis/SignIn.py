@@ -1,6 +1,6 @@
 from flask import session, jsonify, abort
 from flask_restful import Resource, reqparse
-from flask_jwt_extended import create_access_token, set_access_cookies
+from flask_jwt_extended import create_access_token, set_access_cookies, unreset_access_cookies
 from werkzeug.security import check_password_hash
 from models import Users
 
@@ -23,12 +23,12 @@ class SignIn(Resource):
 
             # 가입된 계정인지 확인
             if not user_data:
-                return abort(401, 'invalid account')
+                abort(401, 'invalid account')
             
             # 비밀번호 일치 확인
             if not check_password_hash(user_data.password, password):
                 # return jsonify({"result": "failed"})
-                return abort(401, 'wrong password')
+                abort(401, 'wrong password')
             
             # session에 id 저장
             session.clear()
@@ -36,8 +36,7 @@ class SignIn(Resource):
 
             # 액세스 토큰을 생성
             response = jsonify({"msg": "login successful"})
-            access_token = create_access_token(
-                identity=id)
+            access_token = create_access_token(identity=id)
             set_access_cookies(response, access_token)
 
             # return jsonify({"result":"success"})
@@ -45,7 +44,7 @@ class SignIn(Resource):
             
         except Exception as e:
             session.clear()
-            
+            unset_jwt_cookies(response)
             return jsonify({'error': str(e)})
 
 
