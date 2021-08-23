@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link, Router, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const Nav = styled.div`
     display: flex;
@@ -11,19 +11,19 @@ const StyledNavLink = styled(NavLink)`
     margin-left: 15px;
 `
 
-const LogedIn = styled.div`
+const LoggedIn = styled.div`
 
 `
 
 export default function NavBar() {
     return (
         <Nav>
-            <StyledNavLink to="/" className="nav-link">RacerIn</StyledNavLink>
-            <LogedIn>
-                <StyledNavLink to="/myinfo" className="nav-link">메인</StyledNavLink>
-                <StyledNavLink to="/userlist" className="nav-link">네트워크 </StyledNavLink>
-                <StyledNavLink to="/logout" className="nav-link">로그아웃</StyledNavLink>
-            </LogedIn>
+            <StyledNavLink to="/">RacerIn</StyledNavLink>
+            <LoggedIn>
+                <StyledNavLink to="/info/:id">메인</StyledNavLink>
+                <StyledNavLink to="/userlist">네트워크 </StyledNavLink>
+                <StyledNavLink to="/signout">로그아웃</StyledNavLink>
+            </LoggedIn>
         </Nav>
     );
 }

@@ -1,12 +1,16 @@
 from flask_restful import Resource, reqparse
 from flask import session, jsonify, abort
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy.exc import SQLAlchemyError
 from models import Awards
 from db_connect import db
 
+
 # 수상 내역
 class Award(Resource):
     def get(self):
+        # current_user = get_jwt_identity()
+        # print("현재 사용자 Id : ", current_user)
         session['user_id'] = 'test2' # 테스트용 test
         user_award = Awards.query.filter(Awards.user_id == session['user_id']).all()
 

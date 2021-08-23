@@ -1,13 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 import {
-    ReducerAction,
-    Link,
     Switch,
     BrowserRouter,
     Route,
-    useHistory, 
-    useLocation
+    useHistory
 } from 'react-router-dom';
 import axios from 'axios';
 import SignInForm from './SignInForm';
@@ -22,7 +18,7 @@ function SignInPage() {
             .then(response => {
                 console.log(response);
                 alert("로그인 되었습니다.");
-                history.push("/profile");
+                history.push("/info");
             })
             .catch(error => {
                 console.log(error.response);
@@ -73,10 +69,10 @@ export default function UserSign(props) {
                 <Route exact path="/">
                     <SignInPage />
                 </Route>
-                <Route exact path="/signin">
+                <Route path="/signin">
                     <SignInPage />
                 </Route>
-                <Route exact path="/signup">
+                <Route path="/signup">
                     <SignUpPage />
                 </Route>
             </Switch>

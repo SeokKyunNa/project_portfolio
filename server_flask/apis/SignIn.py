@@ -1,4 +1,5 @@
 from flask import session, jsonify, abort
+from flask_jwt_extended.utils import get_jwt_identity
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import create_access_token, set_access_cookies, unset_jwt_cookies
 from werkzeug.security import check_password_hash
@@ -36,8 +37,10 @@ class SignIn(Resource):
 
             # 액세스 토큰을 생성
             response = jsonify({"msg": "login successful"})
+            
             access_token = create_access_token(identity=id)
             set_access_cookies(response, access_token)
+            
             
         except Exception as e:
             session.clear()
