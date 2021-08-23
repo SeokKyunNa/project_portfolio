@@ -7,7 +7,7 @@ from datetime import timedelta
 
 SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:root@127.0.0.1:3306/elice_portfolio'
 
-SQLALCHEMY_TRACK_MODIFICATIONS = False
+SQLALCHEMY_TRACK_MODIFICATIONS = 1
 # 이걸 켜면 메모리 사용량이 늘어나서, 꺼주는게 좋아요.
 
 SECRET_KEY = "dev"

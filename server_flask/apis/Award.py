@@ -1,5 +1,6 @@
 from flask_restful import Resource, reqparse
-from flask import session, jsonify
+from flask import session, jsonify, abort
+from sqlalchemy.exc import SQLAlchemyError
 from models import Awards
 from db_connect import db
 
@@ -19,44 +20,45 @@ class Award(Resource):
         return jsonify(award_list)
 
     def post(self):
-        try:
-            parser = reqparse.RequestParser()
-            '''
-            받게 되는 데이터 형태
-            {
-                "award_list": [
-                    {"award": "award title 2", "details": "award details 2"}, 
-                    {"award": "award title 3", "details": "award details 3"},
-                    {"award": "award title 4", "details": "award details 4"}
-                ]
-            }
-            '''
-            parser.add_argument('award_list', type=list, required=True, location='json')
+        parser = reqparse.RequestParser()
+        '''
+        받게 되는 데이터 형태
+        {
+            "award_list": [
+                {"award": "award title 2", "details": "award details 2"}, 
+                {"award": "award title 3", "details": "award details 3"},
+                {"award": "award title 4", "details": "award details 4"}
+            ]
+        }
+        '''
+        parser.add_argument('award_list', type=list, required=True, location='json')
 
-            session['user_id'] = 'test2' # 테스트용 test
-            user_id = session['user_id']
+        session['user_id'] = 'test2' # 테스트용 test
+        user_id = session['user_id']
 
-            args = parser.parse_args()
-            for arg in args['award_list']:
-                award = arg['award']
-                details = arg['details']
-                
-                award_list = Awards(
-                    user_id = user_id,
-                    award = award,
-                    details = details
-                )
-
-                db.session.add(award_list)
+        args = parser.parse_args()
+        for arg in args['award_list']:
+            award = arg['award']
+            details = arg['details']
             
+            award_list = Awards(
+                user_id = user_id,
+                award = award,
+                details = details
+            )
+
+            db.session.add(award_list)
+        
+        try:
             db.session.commit()
 
-            return jsonify({"result":"success"})
-            
-        except Exception as e:
+        except SQLAlchemyError as e:
             db.session.rollback()
 
-            return jsonify({'error': str(e)})
+            abort(500, str(e))
+
+        else: 
+            return jsonify({"result":"success"})
 
     def patch(self):
         try:
@@ -87,14 +89,19 @@ class Award(Resource):
             return jsonify({'error': str(e)})
 
     def delete(self, id):
-        try:
-            user_award = Awards.query.filter(Awards.id == id).first()
+        user_award = Awards.query.filter(Awards.id == id).first()
 
+        # 삭제할 데이터가 없을 때 처리해줘야 함
+
+        
+        try:
             db.session.delete(user_award)
             db.session.commit()
-
-            return jsonify({"result": "success"})
-        except Exception as e:
+            
+        except SQLAlchemyError as e:
             db.session.rollback()
             
-            return jsonify({'error': str(e)})
+            abort(500, str(e))
+
+        else:
+            return jsonify({"result": "success"})
