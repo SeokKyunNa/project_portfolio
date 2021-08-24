@@ -25,7 +25,7 @@ function App() {
         {/* 메인 화면 (내 정보) */}
         <Route path="/info/:user_id" component={UserInfo} />
         {/* 네트워크 화면 (사용자 목록) */}
-        <Route path="/userlist"/>
+        <Route path="/userlist" component={UserList} />
       </Switch>
     </BrowserRouter>
   );

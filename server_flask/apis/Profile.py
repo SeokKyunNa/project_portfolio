@@ -13,13 +13,13 @@ class Profile(Resource):
         # print("현재 사용자 Id : _" + current_user + "_")
         # print("주소 매개변수로 받은 id : _" + user_id + "_")
         user_id = user_id.strip()
-        user_profile = Profiles.query.filter(Profiles.user_id == user_id).first()
-        user_info = Users.query.filter(Users.id == user_id).first()
+
+        user_info = db.session.query(Users, Profiles).filter(Users.id == user_id, Users.id==Profiles.user_id).first()
 
         user_profile_json = {
-            'image': user_profile.image,
-            'introduction': user_profile.introduction,
-            'name': user_info.name
+            'image': user_info[1].image,
+            'introduction': user_info[1].introduction,
+            'name': user_info[0].name
         }
 
         return jsonify(user_profile_json)

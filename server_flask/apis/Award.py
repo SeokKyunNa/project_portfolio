@@ -19,6 +19,7 @@ class Award(Resource):
 
         award_list = [
             {
+                'id': award.id,
                 'award': award.award,
                 'details': award.details
             } for award in user_award

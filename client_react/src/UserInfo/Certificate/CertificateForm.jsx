@@ -1,13 +1,37 @@
-export default function CertificateForm({
-    name,
-    issued_by,
-    acquisition_date
-}) {
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import Moment from 'react-moment';
+import * as UI from '../UserInfoComponents';
+
+export default function CertificateForm({ user_id }) {
+    const [certData, setCertData] = useState([]);
+    const [isEditing, setIsEdting] = useState(false);
+
+    useEffect(() => {
+        (async function (id) {
+            // 자격증
+            await axios.get(`http://127.0.0.1:5000/certificate/${user_id}`, {withCredentials: true})
+                .then(response => {
+                    // console.log(response);
+                    setCertData(response.data);
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        })();
+    }, []);
     return (
-        <div>
-            <p>{name}</p>
-            <p>{issued_by}</p>
-            <p>{acquisition_date}</p>
-        </div>
+        <UI.InfoWrapper>
+            <h4>자격증</h4>
+            {certData && certData.map((cert, i) => (
+                <div key={`cert-${i}`}>
+                    <p>{cert.name}</p>
+                    <p>{cert.issued_by}</p>
+                    <p><Moment format="YYYY년 MM월">{cert.acquisition_date}</Moment> 취득</p>
+                    {certData.length > i+1 && <UI.Line />}
+                </div>
+            ))}
+            <UI.PencilButton />
+        </UI.InfoWrapper>
     );
 }

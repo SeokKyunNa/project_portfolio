@@ -5,19 +5,17 @@ from db_connect import db
 
 # 사용자 리스트 (네트워크 화면)
 class UserList(Resource):
-    def get(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('searchname', type=str, default='')
-        args = parser.parse_args()
-
-        searchname = args['searchname']
+    def get(self, searchname=''):
+        searchname = searchname.strip()
         search = "%{}%".format(searchname)
         users = db.session.query(Users, Profiles).filter(Users.name.like(search), Users.id==Profiles.user_id).all()
-
+        
         user_list = [
             {
-                'username': user[0].name,
-                'introduction': user[1].introduction
+                'user_id': user[0].id,
+                'name': user[0].name,
+                'introduction': user[1].introduction,
+                'image': user[1].image
             } for user in users
         ]
 
