@@ -1,14 +1,20 @@
 from datetime import date
 from flask_restful import Resource, reqparse
-from flask import session, jsonify
+from flask import session, jsonify, abort
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from sqlalchemy.exc import SQLAlchemyError
 from models import Certificates
 from db_connect import db
 
 # 자격증
 class Certificate(Resource):
-    def get(self):
-        session['user_id'] = 'test2' # 테스트용 test
-        user_cert = Certificates.query.filter(Certificates.user_id == session['user_id']).all()
+    # @jwt_required()
+    def get(self, user_id):
+        # current_user = get_jwt_identity()
+        user_id = user_id.strip()
+        # print("자격증 아이디 :_" + user_id + "_")
+
+        user_cert = Certificates.query.filter(Certificates.user_id == user_id).all()
 
         cert_list = [
             {
@@ -20,6 +26,7 @@ class Certificate(Resource):
 
         return jsonify(cert_list)
 
+    @jwt_required()
     def post(self):
         try:
             parser = reqparse.RequestParser()
@@ -63,6 +70,7 @@ class Certificate(Resource):
 
             return jsonify({'error': str(e)})
 
+    @jwt_required()
     def patch(self):
         try:
             session['user_id'] = 'test2' # 테스트용 test
@@ -93,6 +101,7 @@ class Certificate(Resource):
 
             return jsonify({'error': str(e)})
 
+    @jwt_required()
     def delete(self, id):
         try:
             user_award = Certificates.query.filter(Certificates.id == id).first()

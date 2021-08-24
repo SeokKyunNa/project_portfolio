@@ -27,6 +27,8 @@ function SignInPage() {
                         alert('존재하지 않는 계정입니다.');
                     } else if (error.response.data.message === 'wrongPassword'){
                         alert('잘못된 비밀번호입니다.');
+                    } else {
+                        alert('오류입니다.')
                     }
                 } 
             });

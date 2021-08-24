@@ -8,12 +8,13 @@ from db_connect import db
 
 # 수상 내역
 class Award(Resource):
-    @jwt_required()
+    # @jwt_required()
     def get(self, user_id):
-        current_user = get_jwt_identity()
-        print("현재 사용자 Id : ", current_user)
-        print("테스트 유저 :", user_id)
-
+        # current_user = get_jwt_identity()
+        # print("현재 사용자 Id : _" + current_user + "_")
+        # print("주소 매개변수로 받은 id : _" + user_id + "_")
+        user_id = user_id.strip()
+        
         user_award = Awards.query.filter(Awards.user_id == user_id).all()
 
         award_list = [
@@ -67,6 +68,7 @@ class Award(Resource):
         else: 
             return jsonify({"result":"success"})
 
+    @jwt_required()
     def patch(self):
         try:
             session['user_id'] = 'test2' # 테스트용 test
@@ -95,6 +97,7 @@ class Award(Resource):
 
             return jsonify({'error': str(e)})
 
+    @jwt_required()
     def delete(self, id):
         user_award = Awards.query.filter(Awards.id == id).first()
 

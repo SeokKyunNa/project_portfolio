@@ -1,22 +1,30 @@
 from flask_restful import Resource, reqparse
-from flask import session, jsonify
-from models import Profiles
+from flask import session, jsonify, abort
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from sqlalchemy.exc import SQLAlchemyError
+from models import Profiles, Users
 from db_connect import db
 
 # 프로필
 class Profile(Resource):
-    
-    def get(self):
-        session['user_id'] = 'test2' # 테스트용 test
-        user_profile = Profiles.query.filter(Profiles.user_id == session['user_id']).first()
+    # @jwt_required()
+    def get(self, user_id):
+        # current_user = get_jwt_identity()
+        # print("현재 사용자 Id : _" + current_user + "_")
+        # print("주소 매개변수로 받은 id : _" + user_id + "_")
+        user_id = user_id.strip()
+        user_profile = Profiles.query.filter(Profiles.user_id == user_id).first()
+        user_info = Users.query.filter(Users.id == user_id).first()
 
         user_profile_json = {
             'image': user_profile.image,
-            'introduction': user_profile.introduction
+            'introduction': user_profile.introduction,
+            'name': user_info.name
         }
 
         return jsonify(user_profile_json)
 
+    @jwt_required()
     def post(self):
         try:
             parser = reqparse.RequestParser()
@@ -45,6 +53,7 @@ class Profile(Resource):
 
             return jsonify({'error': str(e)})
 
+    @jwt_required()
     def patch(self):
         try:
             session['user_id'] = 'test2' # 테스트용 test

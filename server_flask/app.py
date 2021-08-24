@@ -16,7 +16,7 @@ def create_app():
     db.init_app(app)
     migrate = Migrate(app, db)
     jwt = JWTManager(app)
-    CORS(app)
+    CORS(app, supports_credentials=True)
 
     api = Api(app)
 
@@ -24,11 +24,11 @@ def create_app():
     api.add_resource(SignUp.SignUp, '/signup')
     api.add_resource(SignOut.SignOut, '/signout')
     api.add_resource(UserList.UserList, '/userlist', '/userlist/<name>')
-    api.add_resource(Profile.Profile, '/profile', '/profile/<id>')
+    api.add_resource(Profile.Profile, '/profile', '/profile/<user_id>')
     api.add_resource(Award.Award, '/award', '/award/<user_id>')
-    api.add_resource(Certificate.Certificate, '/certificate', '/certificate/<id>')
-    api.add_resource(Project.Project, '/project', '/project/<id>')
-    api.add_resource(Education.Education, '/education', '/education/<id>')
+    api.add_resource(Certificate.Certificate, '/certificate', '/certificate/<user_id>')
+    api.add_resource(Project.Project, '/project', '/project/<user_id>')
+    api.add_resource(Education.Education, '/education', '/education/<user_id>')
     
     return app
 
