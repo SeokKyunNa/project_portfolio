@@ -25,7 +25,7 @@ def create_app():
     api.add_resource(SignOut.SignOut, '/signout')
     api.add_resource(UserList.UserList, '/userlist', '/userlist/<name>')
     api.add_resource(Profile.Profile, '/profile', '/profile/<id>')
-    api.add_resource(Award.Award, '/award', '/award/<id>')
+    api.add_resource(Award.Award, '/award', '/award/<user_id>')
     api.add_resource(Certificate.Certificate, '/certificate', '/certificate/<id>')
     api.add_resource(Project.Project, '/project', '/project/<id>')
     api.add_resource(Education.Education, '/education', '/education/<id>')

@@ -7,8 +7,8 @@ from flask_jwt_extended import get_jwt_identity
 class SignOut(Resource):
     @jwt_required()
     def post(self):
-        current_user = get_jwt_identity()
-        print("현재 사용자 :", current_user)
+        # current_user = get_jwt_identity()
+        # print("현재 사용자 :", current_user)
         try:
             response = jsonify({"msg": "logout successful"})
             # session 삭제

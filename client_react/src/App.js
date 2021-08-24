@@ -17,13 +17,13 @@ function App() {
       <NavBar />
       <Switch>
         {/* 로그인 여부에 따라서 root path 상태 선택 (로그인 화면 or 메인 화면) */}
-        <Route exact Path="/">
+        <Route exact path="/">
           <UserSign />
         </Route>
         {/* 로그인 화면 */}
         <Route path="/signin"/>
         {/* 메인 화면 (내 정보) */}
-        <Route path="/info/:id"/>
+        <Route path="/info/:user_id" component={UserInfo} />
         {/* 네트워크 화면 (사용자 목록) */}
         <Route path="/userlist"/>
       </Switch>

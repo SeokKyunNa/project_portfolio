@@ -1,7 +1,6 @@
 from flask import session, jsonify, abort
-from flask_jwt_extended.utils import get_jwt_identity
 from flask_restful import Resource, reqparse
-from flask_jwt_extended import create_access_token, set_access_cookies, unset_jwt_cookies
+from flask_jwt_extended import create_access_token, create_refresh_token, set_access_cookies, set_refresh_cookies, unset_jwt_cookies
 from werkzeug.security import check_password_hash
 from models import Users
 
@@ -39,8 +38,9 @@ class SignIn(Resource):
             response = jsonify({"msg": "login successful"})
             
             access_token = create_access_token(identity=id)
+            # refresh_token = create_refresh_token(identity=id)
             set_access_cookies(response, access_token)
-            
+            # set_refresh_cookies(response, refresh_token)
             
         except Exception as e:
             session.clear()

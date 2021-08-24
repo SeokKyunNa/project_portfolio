@@ -8,11 +8,13 @@ from db_connect import db
 
 # 수상 내역
 class Award(Resource):
-    def get(self):
-        # current_user = get_jwt_identity()
-        # print("현재 사용자 Id : ", current_user)
-        session['user_id'] = 'test2' # 테스트용 test
-        user_award = Awards.query.filter(Awards.user_id == session['user_id']).all()
+    @jwt_required()
+    def get(self, user_id):
+        current_user = get_jwt_identity()
+        print("현재 사용자 Id : ", current_user)
+        print("테스트 유저 :", user_id)
+
+        user_award = Awards.query.filter(Awards.user_id == user_id).all()
 
         award_list = [
             {
@@ -23,6 +25,7 @@ class Award(Resource):
 
         return jsonify(award_list)
 
+    @jwt_required()
     def post(self):
         parser = reqparse.RequestParser()
         '''

@@ -1,9 +1,19 @@
 import axios from "axios";
 
+const authedAxios = axios.create({
+    headers: {
+        Authorization: 'access_token_cookie'
+        // Authorization: `Bearer ${token}`
+    }
+});
+
 const getAwardList = async (id) => {
-    await axios.get("http://localhost:5000/award/<id>")
+    await authedAxios.get("http://127.0.0.1:5000/award/test1@test.com")
         .then(response => {
             console.log(response);
+        })
+        .catch(err => {
+            console.log(err);
         })
 }
 
