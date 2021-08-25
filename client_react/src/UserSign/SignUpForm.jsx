@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import * as Sign from './SignComponents'
 
 
-export default function SignUpForm ({ onSubmit }) {
+export default function SignUpForm ({ handleSubmit }) {
     const initialValues = { id: "", password: "", check_password: "", name: "" };
 
     const SignUpSchema = Yup.object().shape({
@@ -24,9 +24,9 @@ export default function SignUpForm ({ onSubmit }) {
             .matches(/^[a-zA-Z가-힣]*$/, {message: "영문 혹은 한글로 된 올바른 이름을 입력하세요."}),
     });
 
-    const handleSubmit = (values) => {
-        onSubmit(values)
-    };
+    // const formikSubmit = (values) => {
+    //     handleSubmit(values)
+    // };
 
     return (
         <Formik
@@ -34,6 +34,7 @@ export default function SignUpForm ({ onSubmit }) {
             validationSchema={SignUpSchema}
             onSubmit={(values, { setSubmitting }) => {
                 setSubmitting(true);
+                console.log("포믹온섭밋:", values);
                 handleSubmit(values);
                 setSubmitting(false);
             }}

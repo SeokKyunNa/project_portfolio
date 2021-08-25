@@ -4,7 +4,6 @@ import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import * as Sign from './SignComponents'
 
-
 export default function SignInForm({ onSubmit }) {
     const initialValues = { id: "", password: "" };
 
