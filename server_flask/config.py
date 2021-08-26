@@ -24,5 +24,5 @@ JWT_REFRESH_COOKIE_PATH = "/"
 JWT_SECRET_KEY = "dev"
 # JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
 # JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=10)
-JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=1)
-JWT_REFRESH_TOKEN_EXPIRES = timedelta(minutes=10)
+JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=10)
+JWT_REFRESH_TOKEN_EXPIRES = timedelta(minutes=30)

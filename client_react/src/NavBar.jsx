@@ -22,19 +22,25 @@ const LoggedIn = styled.div`
 export default function NavBar() {
     const history = useHistory();
     const myIdContext = useContext(UserContext);
-    console.log("navbar context:", myIdContext.myId);
-    console.log("현재 토큰:", GetCurrentUser());
+
+    const access_token = GetCurrentUser();
+    const api_url = "http://127.0.0.1:5000";
+    console.log("NavBar 현재 토큰:", GetCurrentUser());
+
+    const authAxios = axios.create({
+        baseURL: api_url,
+        headers: {
+            Authorization: `Bearer ${access_token}`
+        }
+    })
 
     const handleLogout = async () => {
-        await axios.post(`http://127.0.0.1:5000/signout`
-            ,{ headers: { "Authorization": `Bearer ${GetCurrentUser()}` }}
-            
-        )
+        await authAxios.post(`${api_url}/signout`)
             .then(response => {
                 console.log(response);
                 myIdContext.setMyIdHandler("");
                 localStorage.removeItem("myId");
-                localStorage.removeItem("access_token");
+                localStorage.removeItem("access-token");
                 history.replace("/");
             })
             .catch(err => {

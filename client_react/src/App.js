@@ -17,7 +17,6 @@ function App() {
   const myIdContext = useContext(UserContext);
   useEffect(()=>{
     myIdContext.setMyIdHandler();
-    console.log("App.js 불러오기", myIdContext.myId);
   }, []);
   
   return (

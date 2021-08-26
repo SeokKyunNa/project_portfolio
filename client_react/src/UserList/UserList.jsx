@@ -4,16 +4,40 @@ import axios from 'axios';
 import SearchNameField from './SearchNameField';
 import UserSimple from './UserSimple';
 import * as UL from './UserListComponents';
+import GetCurrentUser from '../Token/GetCurrentUser';
 
 
 export default function UserList(props) {
     const [searchName, setSearchName] = useState('');
     const [userData, setUserData] = useState([]);
 
+    const access_token = GetCurrentUser();
+    const api_url = "http://127.0.0.1:5000";
+    console.log("User List 토큰:", GetCurrentUser());
+
+    const authAxios = axios.create({
+        baseURL: api_url,
+        headers: {
+            'Content-Type' : 'application/json',
+            Accept : 'application/json',
+            Authorization: `Bearer ${access_token}`
+        }
+    });
+    axios.interceptors.request.use(
+        config => {
+            config.headers.authorization = `Bearer ${access_token}`;
+            return config;
+        },
+        error => {
+            return Promise.reject(error);
+        }
+    );
+
     useEffect(() => {
         (async function () {
-            await axios.get(`http://127.0.0.1:5000/userlist`)
+            await authAxios.get(`${api_url}/userlist`)
                 .then(response => {
+                    console.log(response);
                     setUserData(response.data);
                 })
                 .catch(err => {
@@ -23,7 +47,7 @@ export default function UserList(props) {
     }, []);
 
     async function getUsers(name) {
-        await axios.get(`http://127.0.0.1:5000/userlist/${name}`)
+        await authAxios.get(`${api_url}/userlist/${name}`)
             .then(response => {
                 setUserData(response.data);
             })

@@ -24,14 +24,13 @@ function SignInPage() {
                 // localStorage에 현재 로그인한 ID 저장
                 localStorage.setItem('myId', formData.id);
                 myIdContext.setMyIdHandler();
-                // myIdContext.setMyIdHandler(formData.id);
                 
                 // refresh 토큰을 localStorage에 같이 저장..?
                 // if (response.data.refresh_token){
                 //     localStorage.setItem('refresh_token', response.data.refresh_token)
                 // }
                 alert("로그인 되었습니다.");
-                history.push("/info");
+                history.push("/info/test1@test.com");
             })
             .catch(error => {
                 console.log(error);

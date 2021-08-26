@@ -1,10 +1,12 @@
 from flask_restful import Resource, reqparse
 from flask import session, jsonify
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from models import Users, Profiles
 from db_connect import db
 
 # 사용자 리스트 (네트워크 화면)
 class UserList(Resource):
+    @jwt_required
     def get(self, searchname=''):
         searchname = searchname.strip()
         search = "%{}%".format(searchname)
