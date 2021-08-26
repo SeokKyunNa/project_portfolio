@@ -7,6 +7,7 @@ export const Container = styled.div`
     background-color: #dfe6ed;
     display: flex;
     justify-content: center;
+    padding-bottom: 100px;
 `
 
 export const ProfileContainer = styled.div`

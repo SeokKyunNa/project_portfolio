@@ -9,10 +9,10 @@ import { UserContext } from './context/UserContext';
 
 function App() {
   const myIdContext = useContext(UserContext);
+  
   useEffect(()=>{
     myIdContext.setMyIdHandler();
   }, []);
-  // console.log("App.js myId", myIdContext.myId);
   
   return (
       <BrowserRouter>

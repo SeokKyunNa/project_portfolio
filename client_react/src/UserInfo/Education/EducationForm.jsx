@@ -9,16 +9,15 @@ export default function EducationForm({ user_id }) {
     useEffect(() => {
         (async function () {
             // 학력 사항
-            await axios.get(`http://127.0.0.1:5000/education/${user_id}`, {withCredentials: true})
+            await axios.get(`${process.env.REACT_APP_API_URL}/education/${user_id}`, {withCredentials: true})
                 .then(response => {
-                    // console.log(response);
                     setEduData(response.data);
                 })
                 .catch(err => {
                     console.log(err);
                 })
         })();
-    }, []);
+    }, [user_id]);
 
     return (
         <UI.InfoWrapper>
@@ -31,9 +30,13 @@ export default function EducationForm({ user_id }) {
                 {eduData.length > i+1 && <UI.Line />}
                 </div>
             ))}
-            <UI.ButtonWrapper>
-                <UI.PencilButton />
-            </UI.ButtonWrapper>
+            { user_id === localStorage.myId ? (
+                <UI.ButtonWrapper>
+                    <UI.PencilButton />
+                </UI.ButtonWrapper>
+            ) : (
+                <></>
+            )}
         </UI.InfoWrapper>
     );
 }

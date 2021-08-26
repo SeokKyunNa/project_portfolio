@@ -16,7 +16,7 @@ function SignInPage() {
     const myIdContext = useContext(UserContext);
     
     const handleSubmit = async (formData) => {
-        await axios.post("http://localhost:5000/signin", formData)
+        await axios.post(`${process.env.REACT_APP_API_URL}/signin`, formData)
             .then(response => {
                 if (response.data.access_token){
                     localStorage.setItem('access_token', response.data.access_token)
@@ -33,8 +33,6 @@ function SignInPage() {
                 history.push("/myinfo");
             })
             .catch(error => {
-                console.log(error);
-                console.log(error.response);
                 if (error.response.status === 401){
                     if (error.response.data.message === 'invalidAccount'){
                         alert('존재하지 않는 계정입니다.');
@@ -43,9 +41,9 @@ function SignInPage() {
                     } else {
                         alert('오류입니다.')
                     }
-                } else{
-                    console.log(error);
                 }
+
+                return Promise.reject(error);
             });
     };
 
@@ -58,19 +56,20 @@ function SignUpPage() {
     const history = useHistory();
 
     const handleSubmit = async (formData) => {
-        await axios.post("http://localhost:5000/signup", formData)
+        await axios.post(`${process.env.REACT_APP_API_URL}/signup`, formData)
             .then(response => {
-                // console.log(response);
-                alert('회원가입이 완료되었습니다.');
+                alert("회원가입이 완료되었습니다.");
                 history.push("/signin");
             })
             .catch(error => {
-                // console.log(error.response);
                 if (error.response.status === 409){
                     if (error.response.data.message === 'duplicateId'){
                         alert('중복된 ID입니다.');
+                        
                     }
                 }
+
+                return Promise.reject(error);
             });
     };
 

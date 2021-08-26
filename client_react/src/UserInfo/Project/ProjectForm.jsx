@@ -10,16 +10,15 @@ export default function ProjectForm({ user_id }) {
     useEffect(() => {
         (async function (id) {
             // 프로젝트
-            await axios.get(`http://127.0.0.1:5000/project/${user_id}`, {withCredentials: true})
+            await axios.get(`${process.env.REACT_APP_API_URL}/project/${user_id}`, {withCredentials: true})
                 .then(response => {
-                    // console.log(response);
                     setProjectData(response.data);
                 })
                 .catch(err => {
                     console.log(err);
                 })
         })();
-    }, []);
+    }, [user_id]);
     
     return (
         <UI.InfoWrapper>
@@ -32,9 +31,13 @@ export default function ProjectForm({ user_id }) {
                     {projectData.length > i+1 &&<UI.Line />}
                 </div>
             ))}
-            <UI.ButtonWrapper>
-                <UI.PencilButton />
-            </UI.ButtonWrapper>
+            { user_id === localStorage.myId ? (
+                <UI.ButtonWrapper>
+                    <UI.PencilButton />
+                </UI.ButtonWrapper>
+            ) : (
+                <></>
+            )}
         </UI.InfoWrapper>
     );
 }

@@ -9,16 +9,15 @@ export default function AwardForm({ user_id }) {
     useEffect(() => {
         (async function () {
             // 수상 내역
-            await axios.get(`http://127.0.0.1:5000/award/${user_id}`, {withCredentials: true})
+            await axios.get(`${process.env.REACT_APP_API_URL}/award/${user_id}`, {withCredentials: true})
                 .then(response => {
-                    // console.log(response);
                     setAwardData(response.data);
                 })
                 .catch(err => {
                     console.log(err);
                 })
         })();
-    }, []);
+    }, [user_id]);
 
     const handleClick = () => {
         setIsEdting(!isEditing);
@@ -26,7 +25,6 @@ export default function AwardForm({ user_id }) {
 
     const handleChange = (index) => (e) => {
         const { name, value } = e.target;
-        // console.log(awardData);
         let newAwardData = awardData.map((award, i) => {
             if (index === i) {
                 return { ...award, [name]: value };
@@ -76,9 +74,13 @@ export default function AwardForm({ user_id }) {
                         {awardData.length > i+1 && <UI.Line />}
                         </UI.PWrapper>
                     ))}
-                    <UI.ButtonWrapper>
-                        <UI.PencilButton onClick={handleClick} />
-                    </UI.ButtonWrapper>
+                    { user_id === localStorage.myId ? (
+                        <UI.ButtonWrapper>
+                            <UI.PencilButton onClick={handleClick} />
+                        </UI.ButtonWrapper>
+                    ) : (
+                        <></>
+                    )}
                 </UI.InfoWrapper>
             )}
         </>

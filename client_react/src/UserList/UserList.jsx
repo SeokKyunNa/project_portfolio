@@ -4,6 +4,7 @@ import SearchNameField from './SearchNameField';
 import UserSimple from './UserSimple';
 import * as UL from './UserListComponents';
 import GetCurrentUser from '../Token/GetCurrentUser';
+import { useHistory } from 'react-router-dom';
 
 
 export default function UserList(props) {
@@ -11,10 +12,9 @@ export default function UserList(props) {
     const [userData, setUserData] = useState([]);
 
     const access_token = GetCurrentUser();
-    const api_url = "http://127.0.0.1:5000";
 
     const authAxios = axios.create({
-        baseURL: api_url,
+        baseURL: process.env.REACT_APP_API_URL,
         headers: {
             'Content-Type' : 'application/json',
             Accept : 'application/json',
@@ -33,9 +33,8 @@ export default function UserList(props) {
 
     useEffect(() => {
         (async function () {
-            await authAxios.get(`${api_url}/userlist`)
+            await authAxios.get(`${process.env.REACT_APP_API_URL}/userlist`)
                 .then(response => {
-                    console.log(response);
                     setUserData(response.data);
                 })
                 .catch(err => {
@@ -45,7 +44,10 @@ export default function UserList(props) {
     }, []);
 
     async function getUsers(name) {
-        await authAxios.get(`${api_url}/userlist/${name}`)
+        if (!name || name === "") {
+            return;
+        }
+        await axios.get(`${process.env.REACT_APP_API_URL}/userlist/${name}`)
             .then(response => {
                 setUserData(response.data);
             })
@@ -59,13 +61,23 @@ export default function UserList(props) {
     }
 
     const handleClick = () => {
+        if (searchName.length < 2) {
+            alert("두 글자 이상 입력하세요.");
+            return;
+        }
         getUsers(searchName);
+    }
+
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            handleClick();
+        }
     }
 
     return (
         <UL.Container>
             <UL.SearchWrapper>
-                <SearchNameField value={searchName} onChange={handleChange} />
+                <SearchNameField value={searchName} onChange={handleChange} onKeyPress={handleKeyPress} />
                 <UL.Button onClick={handleClick}>검색</UL.Button>
             </UL.SearchWrapper>
             <UL.ListWrapper>

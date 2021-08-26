@@ -12,9 +12,8 @@ export default function ProfileForm({ user_id }) {
     useEffect(() => {
         (async function (id) {
             // 프로필
-            await axios.get(`http://127.0.0.1:5000/profile/${user_id}`, {withCredentials: true})
+            await axios.get(`${process.env.REACT_APP_API_URL}/profile/${user_id}`, {withCredentials: true})
                 .then(response => {
-                    // console.log(response);
                     setProfile({
                         name: response.data.name,
                         image: response.data.image,
@@ -25,7 +24,7 @@ export default function ProfileForm({ user_id }) {
                     console.log(err);
                 })
         })();
-    }, []);
+    }, [user_id]);
 
     return (
         <UI.ProfileWrapper>
@@ -33,9 +32,13 @@ export default function ProfileForm({ user_id }) {
             <p>{profile.image}</p>
             <p>{profile.name}</p>
             <p>{profile.introduction}</p>
-            <UI.ButtonWrapper>
-                <UI.PencilButton />
-            </UI.ButtonWrapper>
+            { user_id === localStorage.myId ? (
+                <UI.ButtonWrapper>
+                    <UI.PencilButton />
+                </UI.ButtonWrapper>
+            ) : (
+                <></>
+            )}
         </UI.ProfileWrapper>
     );
 }

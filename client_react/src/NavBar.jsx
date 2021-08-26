@@ -10,13 +10,24 @@ const Nav = styled.div`
     height: 35px;
     border-bottom-width: 3px;
     border-bottom: solid;
+    position: relative;
+
+    & > a{
+        position: absolute;
+        left: 50px;
+    }
 `
 
 const StyledNavLink = styled(NavLink)`
     margin-left: 15px;
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
 `
 
 const LoggedIn = styled.div`
+    position: absolute;
+    right: 150px;
 `
 
 export default function NavBar() {
@@ -24,20 +35,17 @@ export default function NavBar() {
     const myIdContext = useContext(UserContext);
 
     const access_token = GetCurrentUser();
-    const api_url = "http://127.0.0.1:5000";
-    // console.log("NavBar 현재 myId:", localStorage.getItem("myId"));
 
     const authAxios = axios.create({
-        baseURL: api_url,
+        baseURL: process.env.REACT_APP_API_URL,
         headers: {
             Authorization: `Bearer ${access_token}`
         }
     })
 
     const handleLogout = async () => {
-        await authAxios.post(`${api_url}/signout`)
+        await authAxios.post(`${process.env.REACT_APP_API_URL}/signout`)
             .then(response => {
-                console.log(response);
                 myIdContext.setMyIdHandler("");
                 localStorage.removeItem("myId");
                 localStorage.removeItem("access-token");

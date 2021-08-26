@@ -10,16 +10,15 @@ export default function CertificateForm({ user_id }) {
     useEffect(() => {
         (async function (id) {
             // 자격증
-            await axios.get(`http://127.0.0.1:5000/certificate/${user_id}`, {withCredentials: true})
+            await axios.get(`${process.env.REACT_APP_API_URL}/certificate/${user_id}`, {withCredentials: true})
                 .then(response => {
-                    // console.log(response);
                     setCertData(response.data);
                 })
                 .catch(err => {
                     console.log(err);
                 })
         })();
-    }, []);
+    }, [user_id]);
     return (
         <UI.InfoWrapper>
             <h4>자격증</h4>
@@ -31,9 +30,13 @@ export default function CertificateForm({ user_id }) {
                     {certData.length > i+1 && <UI.Line />}
                 </div>
             ))}
-            <UI.ButtonWrapper>
-                <UI.PencilButton />
-            </UI.ButtonWrapper>
+            { user_id === localStorage.myId ? (
+                <UI.ButtonWrapper>
+                    <UI.PencilButton />
+                </UI.ButtonWrapper>
+            ) : (
+                <></>
+            )}
         </UI.InfoWrapper>
     );
 }
