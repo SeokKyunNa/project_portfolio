@@ -5,7 +5,7 @@ from flask_jwt_extended import get_jwt_identity
 
 # 로그아웃
 class SignOut(Resource):
-    # @jwt_required()
+    @jwt_required()
     def post(self):
         # current_user = get_jwt_identity()
         # print("현재 사용자 :", current_user)
