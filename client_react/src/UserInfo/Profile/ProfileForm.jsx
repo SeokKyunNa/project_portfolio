@@ -33,7 +33,9 @@ export default function ProfileForm({ user_id }) {
             <p>{profile.image}</p>
             <p>{profile.name}</p>
             <p>{profile.introduction}</p>
-            <UI.PencilButton />
+            <UI.ButtonWrapper>
+                <UI.PencilButton />
+            </UI.ButtonWrapper>
         </UI.ProfileWrapper>
     );
 }

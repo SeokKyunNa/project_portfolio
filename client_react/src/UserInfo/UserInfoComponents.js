@@ -1,12 +1,16 @@
 import styled from "styled-components";
+import editBtn from "../imgs/edit.png";
+import checkBtn from "../imgs/checked.png";
+import addBtn from "../imgs/add.png";
 
 export const Container = styled.div`
-    background-color: #c8d67a;
+    background-color: #dfe6ed;
     display: flex;
+    justify-content: center;
 `
 
 export const ProfileContainer = styled.div`
-    background-color: #8181be;
+    /* background-color: #8181be; */
     width: 200px;
     padding: 0 30px 0 30px;
     & > div{
@@ -15,7 +19,7 @@ export const ProfileContainer = styled.div`
 `
 
 export const InfoContainer = styled.div`
-    background-color: #557555;
+    /* background-color: #557555; */
     width: 950px;
     padding: 0 30px 0 30px;
     & > div{
@@ -43,27 +47,44 @@ export const Line = styled.hr`
     width: 100%;
 `
 
+export const ButtonWrapper = styled.div`
+    text-align: right;
+`
+
 export const PencilButton = styled.button`
     width: 30px;
     height: 30px;
     border: 2px solid;
     border-color: gray;
-    margin: 0 0 10px 0;
+    margin: 0 40px 10px 0;
+    padding: 0;
+    cursor: pointer;
+    background: url(${editBtn});
+    background-repeat: no-repeat;
+    background-size: cover;
 `
 export const SaveButton = styled.button`
     width: 30px;
     height: 30px;
     border: 2px solid;
     border-color: green;
-    margin: 0 0 10px 0;
+    margin: 0 10px 10px 0;
+    cursor: pointer;
+    background: url(${checkBtn});
+    background-repeat: no-repeat;
+    background-size: cover;
 `
 
 export const AddButton = styled.button`
     width: 30px;
     height: 30px;
     border: 2px solid;
-    border-color: blue;
+    border-color: gray;
     margin: 0 0 10px 0;
+    cursor: pointer;
+    background: url(${addBtn});
+    background-repeat: no-repeat;
+    background-size: cover;
 `
 
 export const InputWrapper = styled.div`

@@ -5,7 +5,7 @@ import * as UI from '../UserInfoComponents';
 
 export default function ProjectForm({ user_id }) {
     const [projectData, setProjectData] = useState([]);
-    const [isEditing, setIsEdting] = useState(false);
+    // const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
         (async function (id) {
@@ -32,7 +32,9 @@ export default function ProjectForm({ user_id }) {
                     {projectData.length > i+1 &&<UI.Line />}
                 </div>
             ))}
-            <UI.PencilButton />
+            <UI.ButtonWrapper>
+                <UI.PencilButton />
+            </UI.ButtonWrapper>
         </UI.InfoWrapper>
     );
 }

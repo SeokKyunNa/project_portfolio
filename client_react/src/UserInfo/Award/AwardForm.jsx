@@ -28,7 +28,7 @@ export default function AwardForm({ user_id }) {
         const { name, value } = e.target;
         // console.log(awardData);
         let newAwardData = awardData.map((award, i) => {
-            if (index == i) {
+            if (index === i) {
                 return { ...award, [name]: value };
             } else {
                 return award;
@@ -61,8 +61,10 @@ export default function AwardForm({ user_id }) {
                             </UI.InputWrapper>
                         ))}
                     </form>
-                    <UI.SaveButton onClick={handleClick} type="submit" />
-                    <UI.AddButton onClick={addAwardData} />
+                    <UI.ButtonWrapper>
+                        <UI.SaveButton onClick={handleClick} type="submit" />
+                        <UI.AddButton onClick={addAwardData} />
+                    </UI.ButtonWrapper>
                 </UI.InfoWrapper>
             ) : (
                 <UI.InfoWrapper>
@@ -74,7 +76,9 @@ export default function AwardForm({ user_id }) {
                         {awardData.length > i+1 && <UI.Line />}
                         </UI.PWrapper>
                     ))}
-                    <UI.PencilButton onClick={handleClick}/>
+                    <UI.ButtonWrapper>
+                        <UI.PencilButton onClick={handleClick} />
+                    </UI.ButtonWrapper>
                 </UI.InfoWrapper>
             )}
         </>

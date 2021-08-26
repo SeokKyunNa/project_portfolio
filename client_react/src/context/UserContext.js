@@ -10,7 +10,6 @@ export const UserProvider = ({ children }) => {
 
     const setMyIdHandler = () => {
         setMyId(localStorage.getItem("myId"));
-        console.log("MyId핸들러 호출");
     }
 
     return (

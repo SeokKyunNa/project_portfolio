@@ -6,7 +6,7 @@ from db_connect import db
 
 # 사용자 리스트 (네트워크 화면)
 class UserList(Resource):
-    @jwt_required
+    # @jwt_required
     def get(self, searchname=''):
         searchname = searchname.strip()
         search = "%{}%".format(searchname)

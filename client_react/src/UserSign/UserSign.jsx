@@ -30,7 +30,7 @@ function SignInPage() {
                 //     localStorage.setItem('refresh_token', response.data.refresh_token)
                 // }
                 alert("로그인 되었습니다.");
-                history.push("/info/test1@test.com");
+                history.push("/myinfo");
             })
             .catch(error => {
                 console.log(error);
@@ -58,7 +58,6 @@ function SignUpPage() {
     const history = useHistory();
 
     const handleSubmit = async (formData) => {
-        console.log("회원가입폼 밸류:", formData);
         await axios.post("http://localhost:5000/signup", formData)
             .then(response => {
                 // console.log(response);
@@ -80,7 +79,7 @@ function SignUpPage() {
     );
 }
 
-export default function UserSign(props) {
+export default function UserSign() {
     return (
         <BrowserRouter>
             <Switch>

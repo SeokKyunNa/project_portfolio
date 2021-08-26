@@ -25,7 +25,7 @@ export default function NavBar() {
 
     const access_token = GetCurrentUser();
     const api_url = "http://127.0.0.1:5000";
-    console.log("NavBar 현재 토큰:", GetCurrentUser());
+    // console.log("NavBar 현재 myId:", localStorage.getItem("myId"));
 
     const authAxios = axios.create({
         baseURL: api_url,
@@ -41,7 +41,8 @@ export default function NavBar() {
                 myIdContext.setMyIdHandler("");
                 localStorage.removeItem("myId");
                 localStorage.removeItem("access-token");
-                history.replace("/");
+                window.location.replace("/");
+                
             })
             .catch(err => {
                 console.log(err);
@@ -53,7 +54,7 @@ export default function NavBar() {
             <StyledNavLink to="/">RacerIn</StyledNavLink>
             {myIdContext.myId && (
                 <LoggedIn>
-                    <StyledNavLink to="/info/:id">메인</StyledNavLink>
+                    <StyledNavLink to="/myinfo">메인</StyledNavLink>
                     <StyledNavLink to="/userlist">네트워크 </StyledNavLink>
                     <StyledNavLink to="/signout" onClick={handleLogout}>로그아웃</StyledNavLink>
                 </LoggedIn>

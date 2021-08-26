@@ -5,7 +5,7 @@ import * as UI from '../UserInfoComponents';
 
 export default function CertificateForm({ user_id }) {
     const [certData, setCertData] = useState([]);
-    const [isEditing, setIsEdting] = useState(false);
+    // const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
         (async function (id) {
@@ -31,7 +31,9 @@ export default function CertificateForm({ user_id }) {
                     {certData.length > i+1 && <UI.Line />}
                 </div>
             ))}
-            <UI.PencilButton />
+            <UI.ButtonWrapper>
+                <UI.PencilButton />
+            </UI.ButtonWrapper>
         </UI.InfoWrapper>
     );
 }

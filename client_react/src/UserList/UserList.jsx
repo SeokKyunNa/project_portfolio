@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import axios from 'axios';
 import SearchNameField from './SearchNameField';
 import UserSimple from './UserSimple';
@@ -13,7 +12,6 @@ export default function UserList(props) {
 
     const access_token = GetCurrentUser();
     const api_url = "http://127.0.0.1:5000";
-    console.log("User List 토큰:", GetCurrentUser());
 
     const authAxios = axios.create({
         baseURL: api_url,

@@ -4,7 +4,7 @@ import * as UI from '../UserInfoComponents';
 
 export default function EducationForm({ user_id }) {
     const [eduData, setEduData] = useState([]);
-    const [isEditing, setIsEdting] = useState(false);
+    // const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
         (async function () {
@@ -31,7 +31,9 @@ export default function EducationForm({ user_id }) {
                 {eduData.length > i+1 && <UI.Line />}
                 </div>
             ))}
-            <UI.PencilButton />
+            <UI.ButtonWrapper>
+                <UI.PencilButton />
+            </UI.ButtonWrapper>
         </UI.InfoWrapper>
     );
 }

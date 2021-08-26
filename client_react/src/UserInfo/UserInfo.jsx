@@ -9,9 +9,20 @@ import * as UI from './UserInfoComponents';
 
 // axios.defaults.withCredentials = true;
 
-export default function UserInfo() {
+export default function UserInfo({ match, location }) {
     let parameter = useParams();
-    let user_id = parameter.user_id;
+    let user_id = "";
+    if (match.path === "/info/:user_id") {
+        user_id = parameter.user_id;
+        console.log("UserInfo /info/:user_id:", user_id);
+    } else if (match.path === "/myinfo") {
+        user_id = localStorage.myId;
+        console.log("UserInfo /myinfo:", user_id);
+    }
+
+    if (!user_id || user_id === "") {
+        return window.location.replace("/signin");
+    }
     
     return (
         <UI.Container>

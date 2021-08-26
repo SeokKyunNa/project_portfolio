@@ -9,7 +9,7 @@ ReactDOM.render(
     <React.StrictMode>
       <App />
     </React.StrictMode>
-    </UserProvider>,
+  </UserProvider>,
   document.getElementById('root')
 );
 
