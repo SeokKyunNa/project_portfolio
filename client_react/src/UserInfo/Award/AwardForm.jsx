@@ -28,38 +28,38 @@ export default function AwardForm({ user_id }) {
         setPatchData([]);
     }
 
-    const checkData = () => {
-        // 입력할 데이터와 수정할 데이터 분리
-        awardData.map((award, i) => {
-            award.award = award.award.trim();
-            award.details = award.details.trim();
+    // const checkData = () => {
+    //     // 입력할 데이터와 수정할 데이터 분리
+    //     awardData.map((award, i) => {
+    //         award.award = award.award.trim();
+    //         award.details = award.details.trim();
 
-            if (!award.id || isNaN(award.id)) {
-                // 수상 내역과 상세 내역 모두 입력된 것만 처리
-                if ((award.award && award.award !== "") && (award.details && award.details !== "")) {
-                    setPostData([
-                        ...postData,
-                        {
-                            award: award.award,
-                            details: award.details
-                        }
-                    ]);
-                }
-            } else {
-                // 아이디가 있을 때 patch
-                setPatchData([
-                    ...patchData,
-                    {
-                        id: award.id,
-                        award: award.award,
-                        details: award.details
-                    }
-                ]);
+    //         if (!award.id || isNaN(award.id)) {
+    //             // 수상 내역과 상세 내역 모두 입력된 것만 처리
+    //             if ((award.award && award.award !== "") && (award.details && award.details !== "")) {
+    //                 setPostData([
+    //                     ...postData,
+    //                     {
+    //                         award: award.award,
+    //                         details: award.details
+    //                     }
+    //                 ]);
+    //             }
+    //         } else {
+    //             // 아이디가 있을 때 patch
+    //             setPatchData([
+    //                 ...patchData,
+    //                 {
+    //                     id: award.id,
+    //                     award: award.award,
+    //                     details: award.details
+    //                 }
+    //             ]);
                 
                 
-            }
-        });
-    }
+    //         }
+    //     });
+    // }
 
     const handleClick = () => {
         setIsEditing(!isEditing);
@@ -71,7 +71,7 @@ export default function AwardForm({ user_id }) {
         setIsEditing(!isEditing);
 
         // post data와 patch data를 나누려고 했는데 실패함
-        checkData();
+        // checkData();
 
         if (isEditing) {
             user_id = localStorage.myId;
@@ -125,6 +125,15 @@ export default function AwardForm({ user_id }) {
                 details: ''
             }
         ]);
+        console.log(awardData);
+        // setAwardData((current) => {
+        //     const newList = [...current];
+        //     newList.push({
+        //         award: '',
+        //         details: ''
+        //     });
+        //     return newList;
+        // });
         // setPostData([
         //     ...postData,
         //     {
