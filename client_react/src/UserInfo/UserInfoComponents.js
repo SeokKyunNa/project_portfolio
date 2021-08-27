@@ -2,6 +2,7 @@ import styled from "styled-components";
 import editBtn from "../imgs/edit.png";
 import checkBtn from "../imgs/checked.png";
 import addBtn from "../imgs/add.png";
+import delBtn from "../imgs/del.png";
 
 export const Container = styled.div`
     background-color: #dfe6ed;
@@ -57,7 +58,7 @@ export const PencilButton = styled.button`
     height: 30px;
     border: 2px solid;
     border-color: gray;
-    margin: 0 40px 10px 0;
+    margin: 0 10px 10px 0;
     padding: 0;
     cursor: pointer;
     background: url(${editBtn});
@@ -67,8 +68,7 @@ export const PencilButton = styled.button`
 export const SaveButton = styled.button`
     width: 30px;
     height: 30px;
-    border: 2px solid;
-    border-color: green;
+    border: none;
     margin: 0 10px 10px 0;
     cursor: pointer;
     background: url(${checkBtn});
@@ -79,8 +79,7 @@ export const SaveButton = styled.button`
 export const AddButton = styled.button`
     width: 30px;
     height: 30px;
-    border: 2px solid;
-    border-color: gray;
+    border: none;
     margin: 0 0 10px 0;
     cursor: pointer;
     background: url(${addBtn});
@@ -88,14 +87,31 @@ export const AddButton = styled.button`
     background-size: cover;
 `
 
+export const DelButton = styled.button`
+    width: 30px;
+    height: 30px;
+    border: none;
+    margin: 0 0 10px 0;
+    cursor: pointer;
+    background: url(${delBtn});
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    right: 0px;
+    top: 40px;
+`
+
 export const InputWrapper = styled.div`
     display: flex;
     flex-direction: column;
+    position: relative
 `
 
 export const Input = styled.input`
     height: 25px;
+    width: 85%;
     margin: 4px 0px;
+    padding: 1px 10px 1px 10px;
     border: 2px solid;
     border-color: gray;
     font-size: 15px;
@@ -103,4 +119,10 @@ export const Input = styled.input`
 
 export const PWrapper = styled.div`
 
+`
+
+export const ProfileImage = styled.img`
+    height: 100px;
+    width: 100px;
+    margin-left: 20px;
 `

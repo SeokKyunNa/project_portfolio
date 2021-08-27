@@ -42,7 +42,7 @@ class Project(Resource):
             '''
             parser.add_argument('prj_list', type=list, required=True, location='json')
 
-            session['user_id'] = 'test2' # 테스트용 test
+            # session['user_id'] = 'test2' # 테스트용 test
             user_id = session['user_id']
 
             args = parser.parse_args()
@@ -75,7 +75,7 @@ class Project(Resource):
     @jwt_required()
     def patch(self):
         try:
-            session['user_id'] = 'test2' # 테스트용 test
+            # session['user_id'] = 'test2' # 테스트용 test
 
             parser = reqparse.RequestParser()
             parser.add_argument('prj_list', type=list, required=True, location='json')

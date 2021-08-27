@@ -35,8 +35,8 @@ class Profiles(db.Model):
     def __init__(self, id, user_id, image, introduction):
         self.id = id
         self.user_id = user_id
-        self.image = ''
-        self.introduction = ''
+        self.image = image
+        self.introduction = introduction
 
 # 학력 상태값 관리 테이블
 class Edu_status(db.Model):
@@ -62,11 +62,10 @@ class Educations(db.Model):
     edu_status      = db.Column(db.Integer, db.ForeignKey('edu_status.code', ondelete='SET DEFAULT'))
 
     def __init__(self, id, user_id, name, major, edu_status):
-        self.id = id
         self.user_id = user_id
         self.name = name
-        self.major = ''
-        self.edu_status = 1
+        self.major = major
+        self.edu_status = edu_status
 
 # 사용자 수상 내역
 class Awards(db.Model):
@@ -78,11 +77,10 @@ class Awards(db.Model):
     award       = db.Column(db.String(255))
     details     = db.Column(db.Text())
 
-    def __init__(self, id, user_id, award, edtails):
-        self.id = id
+    def __init__(self, user_id, award, details):
         self.user_id = user_id
         self.award = award
-        self.details = ''
+        self.details = details
 
 # 사용자 프로젝트 정보
 class Projects(db.Model):
@@ -100,9 +98,9 @@ class Projects(db.Model):
         self.id = id
         self.user_id = user_id
         self.title = title
-        self.content = ''
-        self.start_date = '2000-01-01'
-        self.end_date = '2000-01-01'
+        self.content = content
+        self.start_date = start_date
+        self.end_date = end_date
 
 # 사용자 자격증 정보
 class Certificates(db.Model):
@@ -119,8 +117,8 @@ class Certificates(db.Model):
         self.id = id
         self.user_id = user_id
         self.name = name
-        self.issued_by = ''
-        self.acquisition_date = '2000-01-01'
+        self.issued_by = issued_by
+        self.acquisition_date = acquistion_date
 
 '''
 - 회원 정보

@@ -29,7 +29,7 @@ export default function ProfileForm({ user_id }) {
     return (
         <UI.ProfileWrapper>
             <h4>프로필(테스트용 텍스트)</h4>
-            <p>{profile.image}</p>
+            <UI.ProfileImage src={profile.image}/>
             <p>{profile.name}</p>
             <p>{profile.introduction}</p>
             { user_id === localStorage.myId ? (

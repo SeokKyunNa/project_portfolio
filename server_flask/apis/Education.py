@@ -41,7 +41,7 @@ class Education(Resource):
             '''
             parser.add_argument('edu_list', type=list, required=True, location='json')
 
-            session['user_id'] = 'test2' # 테스트용 test
+            # session['user_id'] = 'test2' # 테스트용 test
             user_id = session['user_id']
 
             args = parser.parse_args()
@@ -72,7 +72,7 @@ class Education(Resource):
     @jwt_required()
     def patch(self):
         try:
-            session['user_id'] = 'test2' # 테스트용 test
+            # session['user_id'] = 'test2' # 테스트용 test
 
             parser = reqparse.RequestParser()
             parser.add_argument('edu_list', type=list, required=True, location='json')

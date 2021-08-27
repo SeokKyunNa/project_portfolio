@@ -27,7 +27,7 @@ class Award(Resource):
 
         return jsonify(award_list)
 
-    @jwt_required()
+    # @jwt_required()
     def post(self):
         parser = reqparse.RequestParser()
         '''
@@ -41,12 +41,16 @@ class Award(Resource):
         }
         '''
         parser.add_argument('award_list', type=list, required=True, location='json')
+        parser.add_argument('user_id', type=str, required=True)
 
-        session['user_id'] = 'test2' # 테스트용 test
-        user_id = session['user_id']
-
+        # print("award session:", session['user_id'])
+        # user_id = session['user_id']
         args = parser.parse_args()
+        user_id = args['user_id']
         for arg in args['award_list']:
+            # id가 있으면 이미 존재하는 데이터이므로 patch로 pass
+            if 'id' in arg: continue
+
             award = arg['award']
             details = arg['details']
             
@@ -69,41 +73,42 @@ class Award(Resource):
         else: 
             return jsonify({"result":"success"})
 
-    @jwt_required()
+    # @jwt_required()
     def patch(self):
-        try:
-            session['user_id'] = 'test2' # 테스트용 test
+        parser = reqparse.RequestParser()
+        parser.add_argument('award_list', type=list, required=True, location='json')
+        args = parser.parse_args()
 
-            parser = reqparse.RequestParser()
-            parser.add_argument('award_list', type=list, required=True, location='json')
-            args = parser.parse_args()
-
-            # id별로 돌면서 각 필드들을 update
-            for arg in args['award_list']:
-                id = arg['id']
-                award = arg['award']
-                details = arg['details']
-                
-                user_award = Awards.query.filter(Awards.id == id).first()
-                
-                user_award.award = award
-                user_award.details = details
+        # id별로 돌면서 각 필드들을 update, id가 없는 데이터는 pass
+        for arg in args['award_list']:
+            if 'id' in arg: id = arg['id']
+            else: continue
+            award = arg['award']
+            details = arg['details']
             
+            user_award = Awards.query.filter(Awards.id == id).first()
+            
+            user_award.award = award
+            user_award.details = details
+
+        try:    
             db.session.commit()
-
-            return jsonify({"result": "success"})
-
         except Exception as e:
             db.session.rollback()
 
             return jsonify({'error': str(e)})
+        else: 
+            return jsonify({"result": "success"})
 
-    @jwt_required()
-    def delete(self, id):
-        user_award = Awards.query.filter(Awards.id == id).first()
+    # @jwt_required()
+    def delete(self, user_id):
+        user_id = user_id.strip()
+        print("삭제할 ID", user_id)
+
+        # user_id를 받아오지만 사실은 awards 컬럼의 id(int)를 받음
+        user_award = Awards.query.filter(Awards.id == user_id).first()
 
         # 삭제할 데이터가 없을 때 처리해줘야 함
-
         
         try:
             db.session.delete(user_award)

@@ -32,7 +32,7 @@ class Profile(Resource):
             parser.add_argument('introduction', type=str, required=True)
             args = parser.parse_args()
 
-            session['user_id'] = 'test2' # 테스트용 test
+            # session['user_id'] = 'test2' # 테스트용 test
             user_id = session['user_id']
             image = args['image']
             introduction = args['introduction']
@@ -56,7 +56,7 @@ class Profile(Resource):
     @jwt_required()
     def patch(self):
         try:
-            session['user_id'] = 'test2' # 테스트용 test
+            # session['user_id'] = 'test2' # 테스트용 test
             user_profile = Profiles.query.filter(Profiles.user_id == session['user_id']).first()
 
             parser = reqparse.RequestParser()

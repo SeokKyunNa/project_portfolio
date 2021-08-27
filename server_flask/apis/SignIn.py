@@ -33,6 +33,7 @@ class SignIn(Resource):
             # session에 id 저장
             session.clear()
             session['user_id'] = id
+            print("로그인 세션:", session['user_id'])
 
             # 액세스 토큰을 생성
             response = jsonify({"msg": "login successful"})

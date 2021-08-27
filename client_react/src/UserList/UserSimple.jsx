@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
-import styled from 'styled-components';
 import * as UL from './UserListComponents';
 
 export default function UserSimple({
@@ -18,7 +17,7 @@ export default function UserSimple({
     return (
         <UL.UserContainer>
             <h4>프로필(테스트용 텍스트)</h4>
-            <UL.profileImage src="imgs/smile.png"/>
+            <UL.ProfileImage src={image}/>
             {/* <p>{image}</p> */}
             <p>{name}</p>
             <p>{introduction}</p>

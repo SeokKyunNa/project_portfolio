@@ -52,7 +52,7 @@ export const Input = styled.input`
     color: #7d7e80;
 `;
 
-export const profileImage = styled.img`
+export const ProfileImage = styled.img`
     height: 100px;
     width: 100px;
 `
