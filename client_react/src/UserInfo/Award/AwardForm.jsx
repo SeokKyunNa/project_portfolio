@@ -13,7 +13,7 @@ export default function AwardForm({ user_id }) {
             // 수상 내역 가져오기
             await axios.get(`${process.env.REACT_APP_API_URL}/award/${user_id}`, {withCredentials: true})
                 .then(response => {
-                    setAwardData(response.data);
+                    setAwardData(response.data.award_list);
                     // 원래 있던 데이터는 patchData에 넣어둠, 삭제할 때는 다시 처리
                     // setPatchData(response.data);
                 })

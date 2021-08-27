@@ -17,13 +17,13 @@ class Award(Resource):
         
         user_award = Awards.query.filter(Awards.user_id == user_id).all()
 
-        award_list = [
+        award_list = {'award_list': [
             {
                 'id': award.id,
                 'award': award.award,
                 'details': award.details
             } for award in user_award
-        ]
+        ]}
 
         return jsonify(award_list)
 

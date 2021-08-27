@@ -4,7 +4,6 @@ import SearchNameField from './SearchNameField';
 import UserSimple from './UserSimple';
 import * as UL from './UserListComponents';
 import GetCurrentUser from '../Token/GetCurrentUser';
-import { useHistory } from 'react-router-dom';
 
 
 export default function UserList(props) {
@@ -14,7 +13,7 @@ export default function UserList(props) {
     const access_token = GetCurrentUser();
 
     const authAxios = axios.create({
-        baseURL: process.env.REACT_APP_API_URL,
+        // baseURL: process.env.REACT_APP_API_URL,
         headers: {
             'Content-Type' : 'application/json',
             Accept : 'application/json',
@@ -33,9 +32,9 @@ export default function UserList(props) {
 
     useEffect(() => {
         (async function () {
-            await authAxios.get(`${process.env.REACT_APP_API_URL}/userlist`)
+            await axios.get(`${process.env.REACT_APP_API_URL}/userlist`)
                 .then(response => {
-                    setUserData(response.data);
+                    setUserData(response.data.user_list);
                 })
                 .catch(err => {
                     console.log(err);
@@ -49,7 +48,7 @@ export default function UserList(props) {
         }
         await axios.get(`${process.env.REACT_APP_API_URL}/userlist/${name}`)
             .then(response => {
-                setUserData(response.data);
+                setUserData(response.data.user_list);
             })
             .catch(err => {
                 console.log(err);

@@ -15,13 +15,13 @@ class Education(Resource):
         user_id = user_id.strip()
         user_edu = Educations.query.filter(Educations.user_id == user_id).all()
 
-        edu_list = [
+        edu_list ={'edu_list': [
             {
                 'name': edu.name,
                 'major': edu.major,
                 'edu_status': edu.edu_status
             } for edu in user_edu
-        ]
+        ]}
 
         return jsonify(edu_list)
 

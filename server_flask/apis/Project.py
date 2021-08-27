@@ -15,14 +15,14 @@ class Project(Resource):
         user_id = user_id.strip()
         user_prj = Projects.query.filter(Projects.user_id == user_id).all()
 
-        prj_list = [
+        prj_list = {'prj_list': [
             {
                 'title': prj.title,
                 'content': prj.content,
                 'start_date': prj.start_date,
                 'end_date': prj.end_date
             } for prj in user_prj
-        ]
+        ]}
 
         return jsonify(prj_list)
 

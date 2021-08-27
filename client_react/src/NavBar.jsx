@@ -37,7 +37,7 @@ export default function NavBar() {
     const access_token = GetCurrentUser();
 
     const authAxios = axios.create({
-        baseURL: process.env.REACT_APP_API_URL,
+        // baseURL: process.env.REACT_APP_API_URL,
         headers: {
             Authorization: `Bearer ${access_token}`
         }
