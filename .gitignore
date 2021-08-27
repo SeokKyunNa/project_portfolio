@@ -267,4 +267,4 @@ pip-selfcheck.json
 # End of https://www.toptal.com/developers/gitignore/api/flask,react,venv,python
 
 ### flask migrations ###
-/server_flask/migrations/versions
+/server_flask/migrations
