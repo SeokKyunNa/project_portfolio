@@ -2,7 +2,7 @@ from flask_restful import Resource, reqparse
 from flask import jsonify, abort
 from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.security import generate_password_hash
-from models import Users
+from models import Users, Profiles
 from db_connect import db
 
 # 회원 가입
@@ -36,9 +36,17 @@ class SignUp(Resource):
             password = hashed_password,
             name = name
         )
+        profile = Profiles(
+            user_id = id,
+            image = "static/imgs/default.png",
+            introduction = "자기소개를 작성해주세요."
+        )
 
         try:
             db.session.add(user)
+            db.session.commit()
+
+            db.session.add(profile)
             db.session.commit()
 
         except SQLAlchemyError as e:

@@ -12,6 +12,7 @@ export default function CertificateForm({ user_id }) {
             // 자격증
             await axios.get(`${process.env.REACT_APP_API_URL}/certificate/${user_id}`, {withCredentials: true})
                 .then(response => {
+                    console.log(response);
                     setCertData(response.data.cert_list);
                 })
                 .catch(err => {

@@ -18,6 +18,7 @@ function SignInPage() {
     const handleSubmit = async (formData) => {
         await axios.post(`${process.env.REACT_APP_API_URL}/signin`, formData)
             .then(response => {
+                console.log(response);
                 if (response.data.access_token){
                     localStorage.setItem('access_token', response.data.access_token)
                 }

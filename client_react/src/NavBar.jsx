@@ -46,6 +46,7 @@ export default function NavBar() {
     const handleLogout = async () => {
         await authAxios.post(`${process.env.REACT_APP_API_URL}/signout`)
             .then(response => {
+                console.log(response);
                 myIdContext.setMyIdHandler("");
                 localStorage.removeItem("myId");
                 localStorage.removeItem("access-token");

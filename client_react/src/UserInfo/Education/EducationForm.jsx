@@ -11,6 +11,7 @@ export default function EducationForm({ user_id }) {
             // 학력 사항
             await axios.get(`${process.env.REACT_APP_API_URL}/education/${user_id}`, {withCredentials: true})
                 .then(response => {
+                    console.log(response);
                     setEduData(response.data.edu_list);
                 })
                 .catch(err => {

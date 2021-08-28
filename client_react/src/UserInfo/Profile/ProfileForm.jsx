@@ -14,6 +14,7 @@ export default function ProfileForm({ user_id }) {
             // 프로필
             await axios.get(`${process.env.REACT_APP_API_URL}/profile/${user_id}`, {withCredentials: true})
                 .then(response => {
+                    console.log(response);
                     setProfile({
                         name: response.data.name,
                         image: response.data.image,

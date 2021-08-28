@@ -34,6 +34,7 @@ export default function UserList(props) {
         (async function () {
             await axios.get(`${process.env.REACT_APP_API_URL}/userlist`)
                 .then(response => {
+                    console.log(response);
                     setUserData(response.data.user_list);
                 })
                 .catch(err => {
@@ -48,8 +49,8 @@ export default function UserList(props) {
         }
         await axios.get(`${process.env.REACT_APP_API_URL}/userlist/${name}`)
             .then(response => {
+                console.log(response);
                 setUserData(response.data.user_list);
-                console.log("유저리스트", userData);
             })
             .catch(err => {
                 console.log(err);

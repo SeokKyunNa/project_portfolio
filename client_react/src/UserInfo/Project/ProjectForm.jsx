@@ -12,6 +12,7 @@ export default function ProjectForm({ user_id }) {
             // 프로젝트
             await axios.get(`${process.env.REACT_APP_API_URL}/project/${user_id}`, {withCredentials: true})
                 .then(response => {
+                    console.log(response);
                     setProjectData(response.data.prj_list);
                 })
                 .catch(err => {

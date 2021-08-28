@@ -32,8 +32,7 @@ class Profiles(db.Model):
     image           = db.Column(db.String(255))
     introduction    = db.Column(db.String(255))
 
-    def __init__(self, id, user_id, image, introduction):
-        self.id = id
+    def __init__(self, user_id, image, introduction):
         self.user_id = user_id
         self.image = image
         self.introduction = introduction
@@ -81,6 +80,14 @@ class Awards(db.Model):
         self.user_id = user_id
         self.award = award
         self.details = details
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "award": self.award,
+            "details": self.details
+        }
 
 # 사용자 프로젝트 정보
 class Projects(db.Model):
