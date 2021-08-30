@@ -1,10 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import styled from 'styled-components';
 import * as Sign from './SignComponents'
-
 
 export default function SignInForm({ onSubmit }) {
     const initialValues = { id: "", password: "" };
@@ -43,38 +41,40 @@ export default function SignInForm({ onSubmit }) {
                 } = formik;
                 return (
                     <Sign.Container>
-                        <Sign.StyledForm>
-                            <Sign.TextWrapper>
-                                <Sign.Label htmlFor="id">아이디</Sign.Label>
-                                <Sign.Input 
-                                    type="email"
-                                    id="id"
-                                    name="id"
-                                    autoComplete="off"
-                                    placeholder="아이디(이메일)을 입력하세요."
-                                    className={errors.id && touched.id ? "input-error" : null}
-                                />
-                                <ErrorMessage name="id" component="p" className="error" />
-                            </Sign.TextWrapper>
-                            <Sign.TextWrapper>
-                                <Sign.Label htmlFor="password">비밀번호</Sign.Label>
-                                <Sign.Input 
-                                    type="password"
-                                    id="password"
-                                    name="password"
-                                    placeholder="비밀번호"
-                                    className={errors.password && touched.password ? "input-error" : null}
-                                />
-                                <ErrorMessage name="password" component="p" className="error" />
-                            </Sign.TextWrapper>
-                            <Sign.Button
-                                type="submit"
-                                className={!(dirty && isValid)  || isSubmitting ? "disabled-btn" : ""}
-                                disabled={!(dirty && isValid) || isSubmitting}
-                            >로그인</Sign.Button>
-                        </Sign.StyledForm>
-                        <button>구글 계정으로 로그인</button>
-                        <Link to="/signup">회원가입하기</Link>
+                        <Sign.FormWrapper>
+                            <Sign.StyledForm>
+                                <Sign.TextWrapper>
+                                    <Sign.Label htmlFor="id">아이디</Sign.Label>
+                                    <Sign.Input 
+                                        type="email"
+                                        id="id"
+                                        name="id"
+                                        autoComplete="off"
+                                        placeholder="아이디(이메일)을 입력하세요."
+                                        className={errors.id && touched.id ? "input-error" : null}
+                                    />
+                                    <ErrorMessage name="id" component="p" className="error" />
+                                </Sign.TextWrapper>
+                                <Sign.TextWrapper>
+                                    <Sign.Label htmlFor="password">비밀번호</Sign.Label>
+                                    <Sign.Input 
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        placeholder="비밀번호"
+                                        className={errors.password && touched.password ? "input-error" : null}
+                                    />
+                                    <ErrorMessage name="password" component="p" className="error" />
+                                </Sign.TextWrapper>
+                                <Sign.Button
+                                    type="submit"
+                                    className={!(dirty && isValid)  || isSubmitting ? "disabled-btn" : ""}
+                                    disabled={!(dirty && isValid) || isSubmitting}
+                                >로그인</Sign.Button>
+                            </Sign.StyledForm>
+                            <button>구글 계정으로 로그인</button>
+                            <Link to="/signup">회원가입하기</Link>
+                        </Sign.FormWrapper>
                     </Sign.Container>
                 );
             }}

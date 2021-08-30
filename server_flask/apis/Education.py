@@ -1,25 +1,31 @@
-from datetime import date
 from flask_restful import Resource, reqparse
-from flask import session, jsonify
+from flask import session, jsonify, abort
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from sqlalchemy.exc import SQLAlchemyError
 from models import Educations
 from db_connect import db
 
 # 자격증
 class Education(Resource):
-    def get(self):
-        session['user_id'] = 'test2' # 테스트용 test
-        user_edu = Educations.query.filter(Educations.user_id == session['user_id']).all()
+    # @jwt_required()
+    def get(self, user_id):
+        # current_user = get_jwt_identity()
+        # print("현재 사용자 Id : _" + current_user + "_")
+        # print("주소 매개변수로 받은 id : _" + user_id + "_")
+        user_id = user_id.strip()
+        user_edu = Educations.query.filter(Educations.user_id == user_id).all()
 
-        edu_list = [
+        edu_list ={'edu_list': [
             {
                 'name': edu.name,
                 'major': edu.major,
                 'edu_status': edu.edu_status
             } for edu in user_edu
-        ]
+        ]}
 
         return jsonify(edu_list)
 
+    @jwt_required()
     def post(self):
         try:
             parser = reqparse.RequestParser()
@@ -35,7 +41,7 @@ class Education(Resource):
             '''
             parser.add_argument('edu_list', type=list, required=True, location='json')
 
-            session['user_id'] = 'test2' # 테스트용 test
+            # session['user_id'] = 'test2' # 테스트용 test
             user_id = session['user_id']
 
             args = parser.parse_args()
@@ -63,9 +69,10 @@ class Education(Resource):
 
             return jsonify({'error': str(e)})
 
+    @jwt_required()
     def patch(self):
         try:
-            session['user_id'] = 'test2' # 테스트용 test
+            # session['user_id'] = 'test2' # 테스트용 test
 
             parser = reqparse.RequestParser()
             parser.add_argument('edu_list', type=list, required=True, location='json')
@@ -93,6 +100,7 @@ class Education(Resource):
 
             return jsonify({'error': str(e)})
 
+    @jwt_required()
     def delete(self, id):
         try:
             user_edu = Educations.query.filter(Educations.id == id).first()

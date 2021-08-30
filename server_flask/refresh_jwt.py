@@ -1,6 +1,8 @@
 from flask_jwt_extended import get_jwt, get_jwt_identity, create_access_token, set_access_cookies
 from datetime import datetime, timezone, timedelta
 
+# refresh token
+# 토큰 만료 시간이 30분이 남지 않았다면 재발급
 def refresh_expiring_jwts(response):
     try:
         exp_timestamp = get_jwt()["exp"]

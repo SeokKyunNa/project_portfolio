@@ -4,13 +4,20 @@ import FilteredPropsInputField, { FilteredPropsForm } from "./FilteredPropsInput
 export const Container = styled.div`
   background-color: white;
   width: 500px;
-  height: 90%;
+  height: 100vh;
   margin: auto;
-  flex-direction: column;
-  align-items: center;
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
+
+export const FormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  background-color: white;
+`
 
 export const TextWrapper = styled.div`
   width: 100%;
@@ -47,7 +54,6 @@ export const Button = styled.button`
 
 export const StyledForm = styled(FilteredPropsForm)`
   width: 400px;
-  margin: auto auto 10px auto;
 `
 
 export const Input = styled(FilteredPropsInputField)`

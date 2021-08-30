@@ -18,6 +18,11 @@ SESSION_TYPE = "filesystem"
 # If true this will only allow the cookies that contain your JWTs to be sent
 # over https. In production, this should always be set to True
 JWT_COOKIE_SECURE = False
-JWT_TOKEN_LOCATION = "cookies"
+JWT_TOKEN_LOCATION = ["cookies"]
+JWT_ACCESS_COOKIE_PATH = "/"
+JWT_REFRESH_COOKIE_PATH = "/"
 JWT_SECRET_KEY = "dev"
-JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
+# JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
+# JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=10)
+JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=10)
+JWT_REFRESH_TOKEN_EXPIRES = timedelta(minutes=30)
