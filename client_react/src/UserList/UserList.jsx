@@ -22,7 +22,7 @@ export default function UserList(props) {
     });
     axios.interceptors.request.use(
         config => {
-            config.headers.authorization = `Bearer ${access_token}`;
+            config.headers.Authorization = `Bearer ${access_token}`;
             return config;
         },
         error => {

@@ -11,7 +11,7 @@ export default function AwardForm({ user_id }) {
     useEffect(() => {
         (async function () {
             // 수상 내역 가져오기
-            await axios.get(`${process.env.REACT_APP_API_URL}/award/${user_id}`, {withCredentials: true})
+            await axios.get(`${process.env.REACT_APP_API_URL}/award/${user_id}`)
                 .then(response => {
                     console.log(response);
                     setAwardData(response.data.award_list);
@@ -149,7 +149,7 @@ export default function AwardForm({ user_id }) {
 
         // awardData[index].id 값이 있으면 axios.delete 요청 보내기
         if (awardData[index].id && awardData[index].id > 0) {
-            await axios.delete(`${process.env.REACT_APP_API_URL}/award/${awardData[index].id}`, {withCredentials: true})
+            await axios.delete(`${process.env.REACT_APP_API_URL}/award/${awardData[index].id}`)
             .then(response => {
                 console.log(response);
                 setAwardData((current) => {

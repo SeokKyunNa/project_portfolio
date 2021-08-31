@@ -8,7 +8,6 @@ import EducationForm from './Education/EducationForm.jsx';
 import ProjectForm from './Project/ProjectForm.jsx';
 import * as UI from './UserInfoComponents';
 
-// axios.defaults.withCredentials = true;
 
 export default function UserInfo({ match, location }) {
     let { user_id } = useParams();

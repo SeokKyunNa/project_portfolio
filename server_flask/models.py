@@ -37,6 +37,14 @@ class Profiles(db.Model):
         self.image = image
         self.introduction = introduction
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "image": self.image,
+            "introduction": self.introduction
+        }
+
 # 학력 상태값 관리 테이블
 class Edu_status(db.Model):
 
@@ -60,11 +68,20 @@ class Educations(db.Model):
     major           = db.Column(db.String(100))
     edu_status      = db.Column(db.Integer, db.ForeignKey('edu_status.code', ondelete='SET DEFAULT'))
 
-    def __init__(self, id, user_id, name, major, edu_status):
+    def __init__(self, user_id, name, major, edu_status):
         self.user_id = user_id
         self.name = name
         self.major = major
         self.edu_status = edu_status
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "name": self.name,
+            "major": self.major,
+            "edu_status": self.edu_status,
+        }
 
 # 사용자 수상 내역
 class Awards(db.Model):
@@ -101,13 +118,21 @@ class Projects(db.Model):
     start_date      = db.Column(db.Date, nullable=False)
     end_date        = db.Column(db.Date, nullable=False)
 
-    def __init__(self, id, user_id, title, content, start_date, end_date):
-        self.id = id
+    def __init__(self, user_id, title, content, start_date, end_date):
         self.user_id = user_id
         self.title = title
         self.content = content
         self.start_date = start_date
         self.end_date = end_date
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "name": self.name,
+            "major": self.major,
+            "edu_status": self.edu_status,
+        }
 
 # 사용자 자격증 정보
 class Certificates(db.Model):
@@ -126,6 +151,15 @@ class Certificates(db.Model):
         self.name = name
         self.issued_by = issued_by
         self.acquisition_date = acquistion_date
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "name": self.name,
+            "issued_by": self.issued_by,
+            "acquisition_date": self.acquisition_date,
+        }
 
 '''
 - 회원 정보

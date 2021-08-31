@@ -5,6 +5,7 @@ import UserSign from './UserSign/UserSign.jsx';
 import UserInfo from './UserInfo/UserInfo.jsx';
 import UserList from './UserList/UserList.jsx';
 import { UserContext } from './context/UserContext';
+import JwtTest from './JwtTest'
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
           <Route path="/userlist">
           { myIdContext.myId ? <UserList /> : <Redirect to ="/signin" /> }
           </Route>
+          <Route path="/jwttest" component={JwtTest} />
         </Switch>
       </BrowserRouter>
   );

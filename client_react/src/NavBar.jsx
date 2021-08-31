@@ -63,6 +63,7 @@ export default function NavBar() {
             <StyledNavLink to="/">RacerIn</StyledNavLink>
             {myIdContext.myId && (
                 <LoggedIn>
+                    <StyledNavLink to="/jwttest">JwtTest</StyledNavLink>
                     <StyledNavLink to="/myinfo">메인</StyledNavLink>
                     <StyledNavLink to="/userlist">네트워크 </StyledNavLink>
                     <StyledNavLink to="/signout" onClick={handleLogout}>로그아웃</StyledNavLink>

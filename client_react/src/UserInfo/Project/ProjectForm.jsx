@@ -10,7 +10,7 @@ export default function ProjectForm({ user_id }) {
     useEffect(() => {
         (async function (id) {
             // 프로젝트
-            await axios.get(`${process.env.REACT_APP_API_URL}/project/${user_id}`, {withCredentials: true})
+            await axios.get(`${process.env.REACT_APP_API_URL}/project/${user_id}`,)
                 .then(response => {
                     console.log(response);
                     setProjectData(response.data.prj_list);

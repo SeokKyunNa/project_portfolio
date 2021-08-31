@@ -2,7 +2,7 @@ from flask import Flask
 from db_connect import db
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
-from apis import Award, Certificate, Education, Profile, Project, SignIn, SignUp, SignOut, UserList
+from apis import Award, Certificate, Education, Profile, Project, SignIn, SignUp, SignOut, UserList, JwtTest
 from flask_cors import CORS
 from flask_migrate import Migrate
 import config
@@ -29,6 +29,8 @@ def create_app():
     api.add_resource(Certificate.Certificate, '/certificate', '/certificate/<user_id>')
     api.add_resource(Project.Project, '/project', '/project/<user_id>')
     api.add_resource(Education.Education, '/education', '/education/<user_id>')
+    # jwt 테스트
+    api.add_resource(JwtTest.JwtTest, '/jwttest')
     
     return app
 

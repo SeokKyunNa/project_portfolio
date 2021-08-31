@@ -39,15 +39,15 @@ class SignIn(Resource):
             response = jsonify({"msg": "login successful"})
             
             access_token = create_access_token(identity=id)
-            refresh_token = create_refresh_token(identity=id)
+            # refresh_token = create_refresh_token(identity=id)
             
             # refresh 토큰은 쿠키에 저장
             # set_access_cookies(response, access_token)
-            set_refresh_cookies(response, refresh_token)
+            # set_refresh_cookies(response, refresh_token)
             
         except Exception as e:
             session.clear()
-            unset_jwt_cookies(response)
+            # unset_jwt_cookies(response)
 
             abort(500, str(e))
         
