@@ -16,12 +16,16 @@ class Certificate(Resource):
 
         user_cert = Certificates.query.filter(Certificates.user_id == user_id).all()
 
+        # cert_list = {'cert_list': [
+        #     {
+        #         'name': cert.name,
+        #         'issued_by': cert.issued_by,
+        #         'acquisition_date': cert.acquisition_date
+        #     } for cert in user_cert
+        # ]}
+
         cert_list = {'cert_list': [
-            {
-                'name': cert.name,
-                'issued_by': cert.issued_by,
-                'acquisition_date': cert.acquisition_date
-            } for cert in user_cert
+            cert.to_dict() for cert in user_cert
         ]}
 
         return jsonify(cert_list)

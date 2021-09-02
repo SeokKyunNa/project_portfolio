@@ -25,5 +25,5 @@ SESSION_TYPE = "filesystem"
 JWT_SECRET_KEY = "dev"  # Default: None
 # # JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
 # # JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=10)
-# JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=60)    # Default: datetime.timedelta(minutes=15)
-# JWT_REFRESH_TOKEN_EXPIRES = timedelta(minutes=180)  # Default: datetime.timedelta(days=30)
+JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=100)    # Default: datetime.timedelta(minutes=15)
+JWT_REFRESH_TOKEN_EXPIRES = timedelta(hours=2)  # Default: datetime.timedelta(days=30)

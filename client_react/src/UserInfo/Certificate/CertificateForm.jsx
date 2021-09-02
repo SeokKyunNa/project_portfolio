@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import Moment from 'react-moment';
 import * as UI from '../UserInfoComponents';
+import { authAxios } from '../../UserAuth/Auth';
 
 export default function CertificateForm({ user_id }) {
     const [certData, setCertData] = useState([]);
@@ -10,7 +10,7 @@ export default function CertificateForm({ user_id }) {
     useEffect(() => {
         (async function (id) {
             // 자격증
-            await axios.get(`${process.env.REACT_APP_API_URL}/certificate/${user_id}`)
+            await authAxios.get(`/certificate/${user_id}`)
                 .then(response => {
                     console.log(response);
                     setCertData(response.data.cert_list);

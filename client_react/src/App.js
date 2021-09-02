@@ -41,7 +41,7 @@ function App() {
           <Route path="/userlist">
           { myIdContext.myId ? <UserList /> : <Redirect to ="/signin" /> }
           </Route>
-          <Route path="/jwttest" component={JwtTest} />
+          <Route path="/whoami" component={JwtTest} />
         </Switch>
       </BrowserRouter>
   );

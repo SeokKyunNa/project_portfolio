@@ -30,7 +30,7 @@ def create_app():
     api.add_resource(Project.Project, '/project', '/project/<user_id>')
     api.add_resource(Education.Education, '/education', '/education/<user_id>')
     # jwt 테스트
-    api.add_resource(JwtTest.JwtTest, '/jwttest')
+    api.add_resource(JwtTest.JwtTest, '/whoami')
     
     return app
 

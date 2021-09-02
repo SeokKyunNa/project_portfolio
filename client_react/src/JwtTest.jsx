@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import GetCurrentUser from './Token/GetCurrentUser';
+import { GetCurrentUser } from './UserAuth/Auth';
 
 
-export default function UserList(props) {
+export default function UserList() {
     const [name, setName] = useState('');
 
-    // const access_token = GetCurrentUser();
-    const access_token = localStorage.getItem('access_token')
+    const access_token = GetCurrentUser();
 
-    const authAxios = axios.create({
-        // baseURL: process.env.REACT_APP_API_URL,
-        headers: {
-            'Content-Type' : 'application/json',
-            // Accept : 'application/json',
-            // Authorization: `Bearer ${access_token}`
-            Authorization: 'Bearer ' + access_token
-        }
-    });
+    // const authAxios = axios.create({
+    //     // baseURL: process.env.REACT_APP_API_URL,
+    //     headers: {
+    //         'Content-Type' : 'application/json',
+    //         // Authorization: `Bearer ${access_token}`
+    //         Authorization: 'Bearer ' + access_token
+    //     }
+    // });
     axios.interceptors.request.use(
         config => {
             config.headers.Authorization = `Bearer ${access_token}`;
@@ -30,14 +28,11 @@ export default function UserList(props) {
 
     useEffect(() => {
         (async function () {
-            await authAxios.get(`${process.env.REACT_APP_API_URL}/jwttest`)
+            await axios.get(`${process.env.REACT_APP_API_URL}/whoami`)
                 .then(response => {
                     console.log('response:', response);
                     // console.log(response.data.name);
                     setName(response.data.name);
-                })
-                .then(data => {
-                    console.log("This is the data your requested", data);
                 })
                 .catch(err => {
                     console.log('err:', err);
@@ -48,7 +43,7 @@ export default function UserList(props) {
 
     return (
         <div>
-            <h1>JWT TEST</h1>
+            <h1>My Id</h1>
             <p>{name}</p>
         </div>
     );

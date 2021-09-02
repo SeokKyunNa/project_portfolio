@@ -1,44 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import SearchNameField from './SearchNameField';
 import UserSimple from './UserSimple';
 import * as UL from './UserListComponents';
-import GetCurrentUser from '../Token/GetCurrentUser';
+import { authAxios } from '../UserAuth/Auth';
 
 
 export default function UserList(props) {
     const [searchName, setSearchName] = useState('');
     const [userData, setUserData] = useState([]);
 
-    const access_token = GetCurrentUser();
-
-    const authAxios = axios.create({
-        // baseURL: process.env.REACT_APP_API_URL,
-        headers: {
-            'Content-Type' : 'application/json',
-            Accept : 'application/json',
-            Authorization: `Bearer ${access_token}`
-        }
-    });
-    axios.interceptors.request.use(
-        config => {
-            config.headers.Authorization = `Bearer ${access_token}`;
-            return config;
-        },
-        error => {
-            return Promise.reject(error);
-        }
-    );
-
     useEffect(() => {
         (async function () {
-            await axios.get(`${process.env.REACT_APP_API_URL}/userlist`)
+            await authAxios.get(`/userlist`)
                 .then(response => {
                     console.log(response);
                     setUserData(response.data.user_list);
                 })
                 .catch(err => {
-                    console.log(err);
+                    console.log('err:', err);
+                    console.log('err.response:', err.response);
                 });
         })();
     }, []);
@@ -47,13 +27,14 @@ export default function UserList(props) {
         if (!name || name === "") {
             return;
         }
-        await axios.get(`${process.env.REACT_APP_API_URL}/userlist/${name}`)
+        await authAxios.get(`/userlist/${name}`)
             .then(response => {
                 console.log(response);
                 setUserData(response.data.user_list);
             })
             .catch(err => {
-                console.log(err);
+                console.log('err:', err);
+                    console.log('err.response:', err.response);
             });
     }
 

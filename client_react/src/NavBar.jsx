@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { NavLink, useHistory } from 'react-router-dom';
-import axios from 'axios';
 import { UserContext } from './context/UserContext';
-import GetCurrentUser from './Token/GetCurrentUser';
+import { authAxios } from './UserAuth/Auth';
 
 const Nav = styled.div`
     display: flex;
@@ -34,22 +33,13 @@ export default function NavBar() {
     const history = useHistory();
     const myIdContext = useContext(UserContext);
 
-    const access_token = GetCurrentUser();
-
-    const authAxios = axios.create({
-        // baseURL: process.env.REACT_APP_API_URL,
-        headers: {
-            Authorization: `Bearer ${access_token}`
-        }
-    })
-
     const handleLogout = async () => {
-        await authAxios.post(`${process.env.REACT_APP_API_URL}/signout`)
+        await authAxios.post(`/signout`)
             .then(response => {
                 console.log(response);
                 myIdContext.setMyIdHandler("");
                 localStorage.removeItem("myId");
-                localStorage.removeItem("access-token");
+                localStorage.removeItem("access_token");
                 window.location.replace("/");
                 
             })
@@ -63,7 +53,7 @@ export default function NavBar() {
             <StyledNavLink to="/">RacerIn</StyledNavLink>
             {myIdContext.myId && (
                 <LoggedIn>
-                    <StyledNavLink to="/jwttest">JwtTest</StyledNavLink>
+                    <StyledNavLink to="/whoami">WhoAmI</StyledNavLink>
                     <StyledNavLink to="/myinfo">메인</StyledNavLink>
                     <StyledNavLink to="/userlist">네트워크 </StyledNavLink>
                     <StyledNavLink to="/signout" onClick={handleLogout}>로그아웃</StyledNavLink>

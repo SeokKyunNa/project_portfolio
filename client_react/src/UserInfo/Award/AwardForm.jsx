@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import * as UI from '../UserInfoComponents';
+import { authAxios } from '../../UserAuth/Auth'
 
 export default function AwardForm({ user_id }) {
     const [awardData, setAwardData] = useState([]);
@@ -11,7 +11,7 @@ export default function AwardForm({ user_id }) {
     useEffect(() => {
         (async function () {
             // 수상 내역 가져오기
-            await axios.get(`${process.env.REACT_APP_API_URL}/award/${user_id}`)
+            await authAxios.get(`/award/${user_id}`)
                 .then(response => {
                     console.log(response);
                     setAwardData(response.data.award_list);
@@ -82,7 +82,7 @@ export default function AwardForm({ user_id }) {
                     "user_id": user_id,
                     "award_list" : awardData
                 }
-                await axios.post(`${process.env.REACT_APP_API_URL}/award`, data)
+                await authAxios.post(`/award`, data)
                     .then(response => {
                         console.log(response);
                     })
@@ -93,7 +93,7 @@ export default function AwardForm({ user_id }) {
             // 데이터 수정
             if (patchData) {
                 let award_list = {"award_list" : awardData}
-                await axios.patch(`${process.env.REACT_APP_API_URL}/award`, award_list)
+                await authAxios.patch(`/award`, award_list)
                     .then(response => {
                         console.log(response);
                     })
@@ -147,9 +147,9 @@ export default function AwardForm({ user_id }) {
     const handleRemove = async (index) => {
         console.log("삭제:",index);
 
-        // awardData[index].id 값이 있으면 axios.delete 요청 보내기
+        // awardData[index].id 값이 있으면 authAxios.delete 요청 보내기
         if (awardData[index].id && awardData[index].id > 0) {
-            await axios.delete(`${process.env.REACT_APP_API_URL}/award/${awardData[index].id}`)
+            await authAxios.delete(`${process.env.REACT_APP_API_URL}/award/${awardData[index].id}`)
             .then(response => {
                 console.log(response);
                 setAwardData((current) => {
